@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 
 public class InputController : MonoBehaviour
 {
-    [SerializeField]
     private PlayerInput _playerInput;
     private InputAction _moveAction;
     private InputAction _dashAction;

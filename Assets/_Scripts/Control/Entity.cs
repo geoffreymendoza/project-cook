@@ -11,12 +11,13 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected Rigidbody _rb;
     [SerializeField] protected Animator _anim;
     
-    //TODO dash mechanic
+    //TODO assign values on a scriptable object
+    [Header("Dash Values")]
     protected bool _canDash = true;
     protected bool _isDashing = false;
     [SerializeField] protected float _dashPower = 24f;
     protected float _dashTime = 0.2f;
-    protected float _dashCooldown = 1f;
+    [SerializeField] protected float _dashCooldown = 1f;
     
     private WaitForSeconds _waitForDashTime;
     private WaitForSeconds _waitForDashCooldown;

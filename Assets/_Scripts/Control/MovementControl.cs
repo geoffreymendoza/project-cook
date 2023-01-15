@@ -50,10 +50,10 @@ public class MovementControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LookAt(_direction);
+        LookAt();
     }
 
-    private void LookAt(Vector3 direction)
+    private void LookAt()
     {
         //TODO slerp for smoother rotation
         var currentDir = GetDirection();
