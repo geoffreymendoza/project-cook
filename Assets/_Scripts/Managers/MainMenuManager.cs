@@ -8,6 +8,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Animator animCamera;
     [SerializeField] private Animator animUI;
     [SerializeField] private CanvasGroup UI;
+    [SerializeField] private CanvasGroup MainUI;
     [SerializeField] private GameObject MainMenuDefaultButton;
     [SerializeField] private GameObject CustomizeBackButton;
     bool fadeIn = false;
@@ -21,6 +22,7 @@ public class MainMenuManager : MonoBehaviour
     }
    public void SettingsButton()
     {
+        MainUI.blocksRaycasts = false;
         animCamera.SetBool("Customize",true);
         animUI.SetBool("Customize", true);
         fadeIn = true;
@@ -61,7 +63,7 @@ public class MainMenuManager : MonoBehaviour
                 {
                     myEventSystem = GameObject.Find("EventSystem");
                     myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(MainMenuDefaultButton);
-                    
+                    MainUI.blocksRaycasts = true;
                     fadeOut = false;
                 }
             }

@@ -1571,6 +1571,7 @@ MonoBehaviour:
   animCamera: {fileID: 740861481}
   animUI: {fileID: 1016262521}
   UI: {fileID: 448769730}
+  MainUI: {fileID: 1016262522}
   MainMenuDefaultButton: {fileID: 1795393918}
   CustomizeBackButton: {fileID: 1930360278}
 --- !u!1 &763153818
