@@ -8,10 +8,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Animator animCamera;
     [SerializeField] private Animator animUI;
     [SerializeField] private CanvasGroup UI;
-    [SerializeField] private GameObject MainUI;
+    [SerializeField] private GameObject MainMenuDefaultButton;
+    [SerializeField] private GameObject CustomizeBackButton;
     bool fadeIn = false;
     bool fadeOut = false;
-    // Start is called before the first frame update
+    GameObject myEventSystem;
+
     void OnEnable()
     {
         UI.alpha = 0;
@@ -19,15 +21,16 @@ public class MainMenuManager : MonoBehaviour
     }
    public void SettingsButton()
     {
-        animCamera.SetTrigger("Customize");
-        animUI.SetTrigger("Customize");
+        animCamera.SetBool("Customize",true);
+        animUI.SetBool("Customize", true);
         fadeIn = true;
     }
-
+    
     public void MainMenuButton()
     {
-        animCamera.SetTrigger("MainMenu");
-        animUI.SetTrigger("MainMenu");
+        UI.blocksRaycasts = false;
+        animCamera.SetBool("Customize", false);
+        animUI.SetBool("Customize", false);
         fadeOut = true;
     }
     // Update is called once per frame
@@ -40,6 +43,8 @@ public class MainMenuManager : MonoBehaviour
                 UI.alpha += Time.deltaTime;
                 if (UI.alpha >= 1)
                 {
+                    myEventSystem = GameObject.Find("EventSystem");
+                    myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(CustomizeBackButton);
                     UI.blocksRaycasts = true;
                     fadeIn = false;
                 }
@@ -48,12 +53,15 @@ public class MainMenuManager : MonoBehaviour
 
         if (fadeOut)
         {
+            
             if (UI.alpha >= 0)
             {
                 UI.alpha -= Time.deltaTime;
                 if (UI.alpha == 0)
                 {
-                    UI.blocksRaycasts = false;
+                    myEventSystem = GameObject.Find("EventSystem");
+                    myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(MainMenuDefaultButton);
+                    
                     fadeOut = false;
                 }
             }
