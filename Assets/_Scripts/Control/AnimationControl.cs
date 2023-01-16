@@ -29,9 +29,11 @@ public class AnimationControl : MonoBehaviour
     
     private void UpdateAnimation()
     {
+        if(_rb != null)
         _velocity = _rb.velocity;
         var magnitude = _velocity.magnitude;
         magnitude = Mathf.Clamp01(magnitude);
+        if(_anim != null)
         _anim.SetFloat(Data.ANIM_NAVIGATION_SPEED, magnitude);
     }
 }
