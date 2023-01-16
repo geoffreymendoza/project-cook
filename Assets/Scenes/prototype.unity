@@ -308,7 +308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &166657513
 Transform:
   m_ObjectHideFlags: 0
@@ -590,7 +590,7 @@ GameObject:
   m_Component:
   - component: {fileID: 478839635}
   m_Layer: 0
-  m_Name: Spawner Parent
+  m_Name: Spawner_Parent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1150,8 +1150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9a45811a40b254f9a9785f4bb7319a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableType: 2
-  _initialItem: 1
+  _interactableType: 1
+  _initialItem: -1
   _cubeSize: {x: 1, y: 1, z: 1}
 --- !u!1 &1852766292
 GameObject:
@@ -1299,8 +1299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c9a45811a40b254f9a9785f4bb7319a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactableType: 1
-  _initialItem: -1
+  _interactableType: 2
+  _initialItem: 3
   _cubeSize: {x: 1, y: 1, z: 1}
 --- !u!1 &2101864588
 GameObject:

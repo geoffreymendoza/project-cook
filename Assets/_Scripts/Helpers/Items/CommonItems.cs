@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System.Text;
@@ -13,8 +14,9 @@ public class Item
     public bool CanSlice { protected set; get; }
     public bool CanCook { protected set; get; }
     private ItemBags _data;
-    
-    public Item(ItemBags data, ItemObject container)
+    public List<Item> CurrentIngredients { protected set; get; }
+
+    public Item(ItemBags data, ItemObject container = null)
     {
         _data = data;
         Type = data.Type;
@@ -23,6 +25,8 @@ public class Item
         CanCook = data.CanCook;
         ItemName = SplitWordsBySpace(Type.ToString());
         ItemContainer = container;
+        if(_data.Type is ItemType.Plate or ItemType.CookContainer)
+            CurrentIngredients = new List<Item>();
     }
 
     private string SplitWordsBySpace(string word)
@@ -39,9 +43,15 @@ public class Item
         return name;
     }
     
+    //TODO timers before changing state
     public void ChangeState(ItemState newState)
     {
         State = newState;
+    }
+
+    public void UpStateByOne()
+    {
+        State++;
     }
 
     public void Interact()
@@ -51,12 +61,22 @@ public class Item
             //TODO timer
             var info = _data.IngredientProcessInfo.FirstOrDefault(s => s.State == ItemState.Sliced);
             if (info == null) return;
-            State = info.State;
-            ItemContainer.ChangeMesh(info);
-            Debug.Log($"{Type} sliced");
+            Action onDone = () =>
+            {
+                ChangeState(info.State);
+                ItemContainer.ChangeMesh(info);
+                Debug.Log($"{Type} sliced");
+            };
+            var timer = TimerManager.GetTimerBehaviour();
+            timer.Initialize(0.5f, onDone);
         }
         
         //TODO fire extinguisher
+    }
+
+    public void AddIngredient(Item ingredient)
+    {
+        CurrentIngredients.Add(ingredient);
     }
 }
 
@@ -75,7 +95,7 @@ public enum ItemType
     Shrimp,
 
     //PLATING FOOD: 400-599
-    Soup = 400,
+    REMOVED = 400,
     TomatoSoup,
     OnionSoup,
     MushroomSoup,
@@ -98,5 +118,4 @@ public enum ItemState
     Sliced,
     Cooked,
     Prepared,
-    Platter = 100,
 }

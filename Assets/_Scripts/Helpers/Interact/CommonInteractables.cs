@@ -6,7 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class Interactable : IInteractHandler, IPickupHandler
 {
-    public static event System.Action OnRemoveInteractObject;
+    public event System.Action OnRemoveInteractObject;
     public InteractableType Type { get; protected set; } = InteractableType.Unassigned;
     //only useful for plates in sink and counter table
     public int StacksCount { get; protected set; } = 0; 
