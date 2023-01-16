@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class InteractSystem
 {
+    private static IPickupHandler _character;
+    private static Interactable _interactable;
+    
     public static void GrabItem(IPickupHandler character, Interactable interactable)
     {
         //TODO dropping item on the floor
@@ -13,7 +17,7 @@ public static class InteractSystem
             var instance = Object.Instantiate(invisibleTableBag.Prefab);
             instance.Initialize(invisibleTableBag);
             var position = character.ItemObj.transform.position;
-            position.y = 0.5f; //subject to change
+            position.y = 0.5f; //TODO falling animation or formula
             instance.transform.position = position;
             PickupItemByInteractable(character, instance.GetInteract());
             return;
@@ -24,7 +28,7 @@ public static class InteractSystem
         // character don't have item and interact table have
         if (!character.HasItem && interactable.HasItem)
         {
-            PickupItemByPlayer(character, interactable);
+            PickupItemByCharacter(character, interactable);
             return;
         }
 
@@ -36,22 +40,18 @@ public static class InteractSystem
         }
 
         //TODO only plate is acceptable and pot
-        // if (player.HasItem && interactable.HasItem)
-        // {
-        //     itemObject = player.ItemObj;
-        //     var platterType = itemObject.GetItem().Type;
-        //     if (platterType is not (ItemType.Plate or ItemType.CookContainer))
-        //     {
-        //         Debug.Log("no plates");
-        //         return;
-        //     }
-        //     
-        //     //TODO mix and match by recipe system
-        //     PickupItemByPlayer(player, interactable);
-        // }
+        if (character.HasItem && interactable.HasItem)
+        {
+            _character = character;
+            _interactable = interactable;
+            var items = GetItems(character, interactable);
+            if(items.Container == null) return;
+            RecipeSystem.CombineItem(items.Container, items.ItemToCombine);
+            //TODO change mesh appearance
+        }
     }
 
-    private static void PickupItemByPlayer(IPickupHandler character, Interactable interactable)
+    private static void PickupItemByCharacter(IPickupHandler character, Interactable interactable)
     {
         ItemObject itemObject = interactable.ItemObj;
         bool pickedUp = character.PickupItem(itemObject);
@@ -67,9 +67,9 @@ public static class InteractSystem
             character.DropItem();
     }
 
-    public static void Interact(IPickupHandler player, Interactable interactable)
+    public static void Interact(IPickupHandler character, Interactable interactable)
     {
-        if (player.HasItem)
+        if (character.HasItem)
         {
             //TODO fire extinguisher
             return;
@@ -78,5 +78,29 @@ public static class InteractSystem
         if (!interactable.CanTriggerInteractInput) return;
         var item = interactable.ItemObj.GetItem();
         item.Interact();
+    }
+
+    //TODO optimize
+    private static (Item Container, Item ItemToCombine) GetItems(IPickupHandler character, Interactable interactable)
+    {
+        //TODO refactor
+        Item container = null;
+        Item ingredient = null;
+        ItemType charItemType = character.ItemObj.GetItem().Type;
+        if (charItemType is ItemType.Plate or ItemType.CookContainer)
+        {
+            container = character.ItemObj.GetItem();
+            ingredient = interactable.ItemObj.GetItem();
+            return (container, ingredient);
+        }
+
+        ItemType interactableItemType = interactable.ItemObj.GetItem().Type;
+        if (interactableItemType is ItemType.Plate or ItemType.CookContainer)
+        {
+            container = interactable.ItemObj.GetItem();
+            ingredient = character.ItemObj.GetItem();
+            return (container, ingredient);
+        }
+        return (null, null);
     }
 }

@@ -12,6 +12,7 @@ public static class Data
 
     public const string ITEM_BAGS_PATH = "Item_Bags"; 
     public const string INTERACT_BAGS_PATH = "Interact_Bags"; 
+    public const string RECIPE_BAGS_PATH = "Recipe_Bags"; 
     
     private static readonly int InteractableLayer = LayerMask.NameToLayer("Interactable");
     public static readonly int InteractableLayerMask = 1 << InteractableLayer;

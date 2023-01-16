@@ -33,11 +33,11 @@ public class InteractObject : MonoBehaviour
         var instance = (Interactable)Activator.CreateInstance(type);
         _interactable = instance;
         
-        var item = DataManager.GetItemObject(data.InitialItem);
+        var itemObj = DataManager.GetItemObject(data.InitialItem);
         ItemObject instanceItem = null;
-        if (item != null)
+        if (itemObj != null)
         {
-            instanceItem = Instantiate(item, _itemPlacement, false);
+            instanceItem = Instantiate(itemObj, _itemPlacement, false);
             var itemData = DataManager.GetItemData(data.InitialItem);
             instanceItem.Initialize(itemData);
         }
@@ -48,12 +48,12 @@ public class InteractObject : MonoBehaviour
         _renderer.material = data.Material;
         
         if(data.Type == InteractableType.InvisibleTable)
-            Interactable.OnRemoveInteractObject += OnRemoveInteractObject;
+            _interactable.OnRemoveInteractObject += OnRemoveInteractObject;
     }
 
     private void OnRemoveInteractObject()
     {
-        Interactable.OnRemoveInteractObject -= OnRemoveInteractObject;
+        _interactable.OnRemoveInteractObject -= OnRemoveInteractObject;
         //TODO move to object pooling
         Destroy(this.gameObject);
     }

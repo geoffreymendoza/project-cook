@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d075badf1b8f2b4b854dc01c4e23ac2, type: 3}
-  m_Name: Plate
+  m_Name: Onion_Soup
   m_EditorClassIdentifier: 
-  Type: 600
-  State: 0
+  Type: 402
+  State: 4
   CanSlice: 0
   CanCook: 0
-  Prefab: {fileID: 4077663400818467653, guid: 93b39986b0c472f49afe126625587e39, type: 3}
-  Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
-  Material: {fileID: 2100000, guid: 835d621f3f56921438785a0c74676362, type: 2}
+  Prefab: {fileID: 7827253254451878523, guid: 32100b2397be6df439c796c75ba266e3, type: 3}
+  Mesh: {fileID: 0}
+  Material: {fileID: 0}
   IngredientProcessInfo: []
