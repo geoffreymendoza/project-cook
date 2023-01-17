@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarBehaviour : MonoBehaviour
+public class SliderbarBehaviour : MonoBehaviour
 {
     public Slider healthBar;
     public Color Low;
