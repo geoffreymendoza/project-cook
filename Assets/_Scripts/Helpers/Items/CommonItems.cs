@@ -7,12 +7,14 @@ using System.Text;
 [System.Serializable]
 public class Item
 {
+    public static event Action<ItemType> OnWashComplete;
     public ItemType Type { protected set; get; }
     public ItemState State { protected set; get; }
     public string ItemName { protected set; get; }
     public ItemObject ItemContainer { protected set; get; }
     public bool CanSlice { protected set; get; }
     public bool CanCook { protected set; get; }
+    public bool CanWash { protected set; get; }
     private ItemBags _data;
     public List<Item> CurrentIngredients { protected set; get; }
 
@@ -23,6 +25,7 @@ public class Item
         State = data.State;
         CanSlice = data.CanSlice;
         CanCook = data.CanCook;
+        CanWash = data.CanWash;
         ItemName = SplitWordsBySpace(Type.ToString());
         ItemContainer = container;
         if(_data.Type is ItemType.Plate or ItemType.CookContainer)
@@ -70,7 +73,18 @@ public class Item
             var timer = TimerManager.GetTimerBehaviour();
             timer.Initialize(0.5f, onDone);
         }
-        
+
+        if (CanWash)
+        {
+            Action onDone = () =>
+            {
+                OnWashComplete?.Invoke(ItemType.Plate);
+                Debug.Log($"{Type} washed");
+            };
+            var timer = TimerManager.GetTimerBehaviour();
+            timer.Initialize(0.5f, onDone);
+        }
+
         //TODO fire extinguisher
     }
 
@@ -109,6 +123,7 @@ public enum ItemType
     Plate = 600,
     CookContainer,
     FireExtinguisher,
+    DirtyPlate,
 }
 
 public enum ItemState
