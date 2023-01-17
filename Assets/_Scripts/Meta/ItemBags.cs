@@ -11,6 +11,7 @@ public class ItemBags : ScriptableObject
     public bool CanSlice;
     public bool CanCook;
     public bool CanWash;
+    public float InteractDuration;
     public ItemObject Prefab;
     public Mesh Mesh;
     public Material Material;

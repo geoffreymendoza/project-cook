@@ -178,6 +178,12 @@ public class Sink : Interactable
         CanTriggerInteractInput = true;
     }
 
+    private void UpdateStackCount(ItemType type)
+    {
+        Item.OnWashComplete -= UpdateStackCount;
+        StacksCount--;
+    }
+
     public override bool PickupItem(ItemObject itemObject)
     {
         var currentState = itemObject.GetItem().Type;
@@ -186,6 +192,7 @@ public class Sink : Interactable
         if (StacksCount == 0)
             base.PickupItem(itemObject);
         StacksCount++;
+        Item.OnWashComplete += UpdateStackCount;
         return true;
     }
 }
@@ -200,7 +207,10 @@ public class CounterTable : Interactable
     
     public override bool PickupItem(ItemObject itemObject)
     {
-        var currentState = itemObject.GetItem().CurrentIngredients[0].State;
+        Item itm = itemObject.GetItem();
+        if (itm.CurrentIngredients == null) 
+            return false;
+        var currentState = itm.CurrentIngredients[0].State;
         if (currentState != ItemState.Prepared)
             return false;
         base.PickupItem(itemObject);

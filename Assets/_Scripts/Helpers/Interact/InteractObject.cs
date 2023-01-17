@@ -103,6 +103,7 @@ public class InteractObject : MonoBehaviour
     {
         //TODO move to object pooling and timer
         Destroy(_interactable.ItemObj.gameObject);
+        
         OnSpawnDirtyPlate?.Invoke(type);
     }
 

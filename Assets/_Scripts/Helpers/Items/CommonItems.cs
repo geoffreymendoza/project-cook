@@ -15,6 +15,7 @@ public class Item
     public bool CanSlice { protected set; get; }
     public bool CanCook { protected set; get; }
     public bool CanWash { protected set; get; }
+    public float InteractDuration { protected set; get; }
     private ItemBags _data;
     public List<Item> CurrentIngredients { protected set; get; }
 
@@ -26,6 +27,7 @@ public class Item
         CanSlice = data.CanSlice;
         CanCook = data.CanCook;
         CanWash = data.CanWash;
+        InteractDuration = data.InteractDuration;
         ItemName = SplitWordsBySpace(Type.ToString());
         ItemContainer = container;
         if(_data.Type is ItemType.Plate or ItemType.CookContainer)
@@ -71,7 +73,10 @@ public class Item
                 Debug.Log($"{Type} sliced");
             };
             var timer = TimerManager.GetTimerBehaviour();
-            timer.Initialize(0.5f, onDone);
+            // timer.Initialize(0.5f, onDone);
+            
+            timer.Initialize(InteractDuration, true, ItemContainer.transform.position, onDone);
+
         }
 
         if (CanWash)
@@ -82,7 +87,8 @@ public class Item
                 Debug.Log($"{Type} washed");
             };
             var timer = TimerManager.GetTimerBehaviour();
-            timer.Initialize(0.5f, onDone);
+            //timer.Initialize(0.5f, onDone);
+            timer.Initialize(InteractDuration, true, ItemContainer.transform.position, onDone);
         }
 
         //TODO fire extinguisher
