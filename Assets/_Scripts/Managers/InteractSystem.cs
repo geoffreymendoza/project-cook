@@ -53,6 +53,8 @@ public static class InteractSystem
 
     private static void PickupItemByCharacter(IPickupHandler character, Interactable interactable)
     {
+        if (interactable.Type is InteractableType.Sink) return;
+        
         ItemObject itemObject = interactable.ItemObj;
         bool pickedUp = character.PickupItem(itemObject);
         if(pickedUp)
@@ -80,13 +82,21 @@ public static class InteractSystem
         item.Interact();
     }
 
-    //TODO optimize
+    //TODO refactor
     private static (Item Container, Item ItemToCombine) GetItems(IPickupHandler character, Interactable interactable)
     {
-        //TODO refactor
         Item container = null;
         Item ingredient = null;
         ItemType charItemType = character.ItemObj.GetItem().Type;
+        ItemType interactableItemType = interactable.ItemObj.GetItem().Type;
+
+        //TODO sink and dirty table accept multiple plates
+        if ((charItemType is ItemType.Plate && interactableItemType is ItemType.DirtyPlate) ||
+            interactableItemType is ItemType.Plate && charItemType is ItemType.DirtyPlate)
+        {
+            return (null, null);
+        }
+
         if (charItemType is ItemType.Plate or ItemType.CookContainer)
         {
             container = character.ItemObj.GetItem();
@@ -94,7 +104,6 @@ public static class InteractSystem
             return (container, ingredient);
         }
 
-        ItemType interactableItemType = interactable.ItemObj.GetItem().Type;
         if (interactableItemType is ItemType.Plate or ItemType.CookContainer)
         {
             container = interactable.ItemObj.GetItem();

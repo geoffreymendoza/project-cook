@@ -7,6 +7,7 @@ using UnityEngine;
 public class Interactable : IInteractHandler, IPickupHandler
 {
     public event System.Action OnRemoveInteractObject;
+    public event System.Action<ItemType> OnSpawnItemObject;
     public InteractableType Type { get; protected set; } = InteractableType.Unassigned;
     //only useful for plates in sink and counter table
     public int StacksCount { get; protected set; } = 0; 
@@ -16,7 +17,7 @@ public class Interactable : IInteractHandler, IPickupHandler
     public bool CanTriggerInteractInput { protected set; get; } = false;
 
     private bool _init = false;
-    public void Initialize(ItemObject itemObject, Transform itemPlacement)
+    public virtual void Initialize(ItemObject itemObject, Transform itemPlacement)
     {
         if(_init) return;
         _init = true;
@@ -38,9 +39,29 @@ public class Interactable : IInteractHandler, IPickupHandler
         ItemObj = null;
     }
 
+    public virtual void SpawnItem(ItemType type)
+    {
+        if (StacksCount <= 0)
+        {
+            var itemData = DataManager.GetItemData(type);
+            var itemCopy = Object.Instantiate(itemData.Prefab);
+            itemCopy.Initialize(itemData);
+            Transform itemTransform;
+            (itemTransform = itemCopy.transform).SetParent(_itemPlacement.transform, false);
+            itemTransform.position = _itemPlacement.position;
+            ItemObj = itemCopy;
+        }
+        StacksCount++;
+    }
+
     public virtual void InvokeRemoveInteractObject()
     {
         OnRemoveInteractObject?.Invoke();
+    }
+
+    public virtual void InvokeOnSpawnItemObject(ItemType type)
+    {
+        OnSpawnItemObject?.Invoke(type);
     }
 }
 
@@ -57,7 +78,7 @@ public class IngredientStockTable : Interactable
 {
     public IngredientStockTable()
     {
-        StacksCount = 0;
+        StacksCount = 999;
         Type = InteractableType.IngredientStockTable;
     }
 
@@ -90,9 +111,8 @@ public class TrashBin : Interactable
     public override bool PickupItem(ItemObject itemObject)
     {
         var itemType = itemObject.GetItem().Type;
-        if (itemType is ItemType.Plate or ItemType.CookContainer)
+        if (itemType is ItemType.Plate or ItemType.CookContainer or ItemType.DirtyPlate)
         {
-            //TODO only the contents of plate or hotpot should be throw away
             return false;
         }
         Object.Destroy(itemObject.gameObject);
@@ -109,7 +129,6 @@ public class ChoppingTable : Interactable
         CanTriggerInteractInput = true;
     }
     
-    //TODO can only accept raw ingredients
     public override bool PickupItem(ItemObject itemObject)
     {
         var currentState = itemObject.GetItem().State;
@@ -127,7 +146,6 @@ public class CookingTable : Interactable
         Type = InteractableType.CookingTable;
     }
     
-    //TODO only hotpot is accepted
     public override bool PickupItem(ItemObject itemObject)
     {
         var itemType = itemObject.GetItem().Type;
@@ -156,14 +174,86 @@ public class Sink : Interactable
     public Sink()
     {
         StacksCount = 0;
-        Type = InteractableType.InvisibleTable;
+        Type = InteractableType.Sink;
+        CanTriggerInteractInput = true;
+    }
+
+    public override bool PickupItem(ItemObject itemObject)
+    {
+        var currentState = itemObject.GetItem().Type;
+        if (currentState != ItemType.DirtyPlate)
+            return false;
+        if (StacksCount == 0)
+            base.PickupItem(itemObject);
+        StacksCount++;
+        return true;
+    }
+}
+
+public class CounterTable : Interactable
+{
+    public CounterTable()
+    {
+        StacksCount = 0;
+        Type = InteractableType.CounterTable;
+    }
+    
+    public override bool PickupItem(ItemObject itemObject)
+    {
+        var currentState = itemObject.GetItem().CurrentIngredients[0].State;
+        if (currentState != ItemState.Prepared)
+            return false;
+        base.PickupItem(itemObject);
+        InvokeOnSpawnItemObject(ItemType.DirtyPlate);
+        return true;
+    }
+}
+
+//TODO accept multiple plates
+public class DirtyPlateTable : Interactable
+{
+    public DirtyPlateTable()
+    {
+        StacksCount = 0;
+        Type = InteractableType.DirtyPlateTable;
+    }
+
+    public override bool PickupItem(ItemObject itemObject)
+    {
+        return false;
     }
 
     public override void DropItem()
     {
-        base.DropItem();
-        //TODO move it to object pool
-        InvokeRemoveInteractObject();
+        StacksCount--;
+        if (StacksCount == 0)
+        {
+            ItemObj = null;
+        }
+    }
+}
+
+//TODO accept multiple plates
+public class CleanPlateTable : Interactable
+{
+    public CleanPlateTable()
+    {
+        StacksCount = 0;
+        Type = InteractableType.CleanPlateTable;
+    }
+
+    public override bool PickupItem(ItemObject itemObject)
+    {
+        return false;
+    }
+
+    public override void DropItem()
+    {
+        StacksCount--;
+        if (StacksCount == 0)
+        {
+            ItemObj = null;
+        }
     }
 }
 
@@ -190,5 +280,8 @@ public enum InteractableType
     ChoppingTable,
     CookingTable,
     InvisibleTable,
-    Sink
+    Sink,
+    CounterTable,
+    DirtyPlateTable,
+    CleanPlateTable
 }

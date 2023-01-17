@@ -3,7 +3,10 @@ using UnityEngine;
 
 public class InteractObject : MonoBehaviour
 {
+    public static event Action<ItemType> OnSpawnDirtyPlate;
+    
     [SerializeField] private Transform _itemPlacement;
+    private InteractableType _type;
     public Transform GetItemPlacement() => _itemPlacement;
     
     private Interactable _interactable;
@@ -16,6 +19,28 @@ public class InteractObject : MonoBehaviour
     {
         _meshFilter = this.GetComponent<MeshFilter>();
         _renderer = this.GetComponent<Renderer>();
+    }
+
+    private void OnApplicationQuit()
+    {
+        switch (_type)
+        {
+            case InteractableType.InvisibleTable:
+                _interactable.OnRemoveInteractObject -= OnRemoveInteractObject;
+                break;
+            case InteractableType.CounterTable:
+                _interactable.OnSpawnItemObject -= OnSpawnDirtyPlateObject;
+                break;
+            case InteractableType.DirtyPlateTable:
+                OnSpawnDirtyPlate -= _interactable.SpawnItem;
+                break;
+            case InteractableType.CleanPlateTable:
+                Item.OnWashComplete -= _interactable.SpawnItem;
+                break;
+            case InteractableType.Sink:
+                Item.OnWashComplete -= OnWashComplete;
+                break;
+        }
     }
 
     private bool _init = false;
@@ -46,9 +71,39 @@ public class InteractObject : MonoBehaviour
         gameObject.name = data.name;
         _meshFilter.sharedMesh = data.Mesh;
         _renderer.material = data.Material;
-        
-        if(data.Type == InteractableType.InvisibleTable)
-            _interactable.OnRemoveInteractObject += OnRemoveInteractObject;
+
+        _type = data.Type;
+
+        switch (_type)
+        {
+            case InteractableType.InvisibleTable:
+                _interactable.OnRemoveInteractObject += OnRemoveInteractObject;
+                break;
+            case InteractableType.CounterTable:
+                _interactable.OnSpawnItemObject += OnSpawnDirtyPlateObject;
+                break;
+            case InteractableType.DirtyPlateTable:
+                OnSpawnDirtyPlate += _interactable.SpawnItem;
+                break;
+            case InteractableType.CleanPlateTable:
+                Item.OnWashComplete += _interactable.SpawnItem;
+                break;
+            case InteractableType.Sink:
+                Item.OnWashComplete += OnWashComplete;
+                break;
+        }
+    }
+
+    private void OnWashComplete(ItemType type)
+    {
+        Destroy(_interactable.ItemObj.gameObject);
+    }
+
+    private void OnSpawnDirtyPlateObject(ItemType type)
+    {
+        //TODO move to object pooling and timer
+        Destroy(_interactable.ItemObj.gameObject);
+        OnSpawnDirtyPlate?.Invoke(type);
     }
 
     private void OnRemoveInteractObject()
