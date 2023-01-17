@@ -18,6 +18,7 @@ public class Item
     public float InteractDuration { protected set; get; }
     private ItemBags _data;
     public List<Item> CurrentIngredients { protected set; get; }
+    public TimerBehaviour CurrentTimerBehaviour { protected set; get; }
 
     public Item(ItemBags data, ItemObject container = null)
     {
@@ -59,24 +60,23 @@ public class Item
         State++;
     }
 
-    public void Interact()
+    public bool Interact()
     {
         if (CanSlice && State == ItemState.Raw)
         {
             //TODO timer
             var info = _data.IngredientProcessInfo.FirstOrDefault(s => s.State == ItemState.Sliced);
-            if (info == null) return;
+            if (info == null) return false;
             Action onDone = () =>
             {
                 ChangeState(info.State);
                 ItemContainer.ChangeMesh(info);
                 Debug.Log($"{Type} sliced");
             };
-            var timer = TimerManager.GetTimerBehaviour();
-            // timer.Initialize(0.5f, onDone);
-            
-            timer.Initialize(InteractDuration, true, ItemContainer.transform.position, onDone);
-
+            if (CurrentTimerBehaviour != null) return true;
+            CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
+            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform.position, onDone);
+            return true;
         }
 
         if (CanWash)
@@ -86,11 +86,13 @@ public class Item
                 OnWashComplete?.Invoke(ItemType.Plate);
                 Debug.Log($"{Type} washed");
             };
-            var timer = TimerManager.GetTimerBehaviour();
-            //timer.Initialize(0.5f, onDone);
-            timer.Initialize(InteractDuration, true, ItemContainer.transform.position, onDone);
+            if (CurrentTimerBehaviour != null) return true;
+            CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
+            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform.position, onDone);
+            return true;
         }
 
+        return false;
         //TODO fire extinguisher
     }
 

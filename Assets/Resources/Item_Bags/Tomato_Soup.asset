@@ -16,6 +16,8 @@ MonoBehaviour:
   State: 4
   CanSlice: 0
   CanCook: 0
+  CanWash: 0
+  InteractDuration: 3
   Prefab: {fileID: 7827253254451878523, guid: 32100b2397be6df439c796c75ba266e3, type: 3}
   Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   Material: {fileID: 2100000, guid: b42ba7b0505a5c84498e30d0710879a7, type: 2}

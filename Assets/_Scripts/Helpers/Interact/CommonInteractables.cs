@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 //TODO make it abstract class
 [System.Serializable]
@@ -37,6 +39,11 @@ public class Interactable : IInteractHandler, IPickupHandler
     public virtual void DropItem()
     {
         ItemObj = null;
+    }
+
+    public void ActivateInteractState(Item item)
+    {
+        
     }
 
     public virtual void SpawnItem(ItemType type)
@@ -214,7 +221,13 @@ public class CounterTable : Interactable
         if (currentState != ItemState.Prepared)
             return false;
         base.PickupItem(itemObject);
-        InvokeOnSpawnItemObject(ItemType.DirtyPlate);
+        Action onDone = () =>
+        {
+            InvokeOnSpawnItemObject(ItemType.DirtyPlate);
+        };
+        var timer = TimerManager.GetTimerBehaviour();
+        timer.Initialize(itm.InteractDuration, false, Vector3.zero, onDone);
+        InvokeRemoveInteractObject();
         return true;
     }
 }
@@ -279,6 +292,7 @@ public interface IPickupHandler
     ItemObject ItemObj { get; }
     bool PickupItem(ItemObject itemObject);
     void DropItem();
+    void ActivateInteractState(Item item);
 }
 
 public enum InteractableType

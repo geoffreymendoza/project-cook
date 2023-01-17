@@ -5,6 +5,8 @@ using UnityEngine;
 
 public static class InteractSystem
 {
+    // public 
+    
     private static IPickupHandler _character;
     private static Interactable _interactable;
     
@@ -79,7 +81,9 @@ public static class InteractSystem
 
         if (!interactable.CanTriggerInteractInput) return;
         var item = interactable.ItemObj.GetItem();
-        item.Interact();
+        bool isInteracting = item.Interact();
+        if(isInteracting)
+            character.ActivateInteractState(item);
     }
 
     //TODO refactor

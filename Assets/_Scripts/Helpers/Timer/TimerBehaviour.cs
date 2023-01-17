@@ -10,6 +10,8 @@ public class TimerBehaviour : MonoBehaviour
     private Vector3 _spawnPosition;
 
     [SerializeField] private TimeDurationUI _timeUI;
+
+    private bool _interrupted = false;
     
     private bool _init = false;
     public void Initialize(float duration, bool showUI, Vector3 spawnPos, Action onTimerDoneAction = null)
@@ -28,6 +30,11 @@ public class TimerBehaviour : MonoBehaviour
         _init = true;
     }
 
+    public void Interrupted(bool value)
+    {
+        _interrupted = value;
+    }
+
     private void OnTimerDone()
     {
         _timer.OnTimerDone -= OnTimerDone;
@@ -39,6 +46,7 @@ public class TimerBehaviour : MonoBehaviour
     void Update()
     {
         if (!_init) return;
+        if (_interrupted) return;
         //TODO pause if character walk away or in game paused
         
         _timer.Tick(Time.deltaTime);

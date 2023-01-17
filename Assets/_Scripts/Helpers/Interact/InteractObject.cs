@@ -81,6 +81,7 @@ public class InteractObject : MonoBehaviour
                 break;
             case InteractableType.CounterTable:
                 _interactable.OnSpawnItemObject += OnSpawnDirtyPlateObject;
+                _interactable.OnRemoveInteractObject += OnDestroyInteractObject;
                 break;
             case InteractableType.DirtyPlateTable:
                 OnSpawnDirtyPlate += _interactable.SpawnItem;
@@ -99,11 +100,15 @@ public class InteractObject : MonoBehaviour
         Destroy(_interactable.ItemObj.gameObject);
     }
 
+    private void OnDestroyInteractObject()
+    {
+        Destroy(_interactable.ItemObj.gameObject);
+    }
+
     private void OnSpawnDirtyPlateObject(ItemType type)
     {
         //TODO move to object pooling and timer
-        Destroy(_interactable.ItemObj.gameObject);
-        
+        // Destroy(_interactable.ItemObj.gameObject);
         OnSpawnDirtyPlate?.Invoke(type);
     }
 

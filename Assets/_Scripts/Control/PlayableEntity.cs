@@ -14,6 +14,8 @@ public class PlayableEntity : Entity, IPickupHandler
     public bool HasItem => ItemObj != null;
     public ItemObject ItemObj { get; private set; }
 
+    private TimerBehaviour _timer;
+    private bool _isInteracting = false;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +43,7 @@ public class PlayableEntity : Entity, IPickupHandler
 
     private void OnInput(FrameInput input)
     {
+        InteractInterrupted(input);
         InteractItem(input.Interact);
         GrabItem(input.Grab);
     }
@@ -89,7 +92,24 @@ public class PlayableEntity : Entity, IPickupHandler
     {
         ItemObj = null;
     }
-    
+
+    private void InteractInterrupted(FrameInput input)
+    {
+        if (_isInteracting && (input.Horizontal > 0 || input.Vertical > 0))
+        {
+            _isInteracting = false;
+            //TODO interrupt timer
+            _timer.Interrupted(true);
+        }
+    }
+
+    public void ActivateInteractState(Item item)
+    {
+        _isInteracting = true;
+        _timer = item.CurrentTimerBehaviour;
+        _timer.Interrupted(false);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
