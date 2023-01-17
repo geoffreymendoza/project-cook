@@ -8,34 +8,35 @@ public static class TimerManager
     //TODO only one time init to object pool
     public static TimerBehaviour GetTimerBehaviour()
     {
-        var instance = new GameObject("Timer_Behaviour");
-        var timer = instance.AddComponent<TimerBehaviour>();
+        var timer = UIManager.GetUIObject<TimerBehaviour>(UIType.WorldSpaceTimeDuration);
         return timer;
     }
 }
 
 public class Timer
 {
-    private float _remainingSeconds;
+    private float _remainingTime;
+    public event Action<float> OnUpdateTimeUI;
     public event Action OnTimerDone;
     public Timer(float duration)
     {
-        _remainingSeconds = duration;
+        _remainingTime = duration;
     }
 
     public void Tick(float deltaTime)
     {
-        if (_remainingSeconds <= 0f)
+        if (_remainingTime <= 0f)
             return;
-        _remainingSeconds -= deltaTime;
+        _remainingTime -= deltaTime;
+        OnUpdateTimeUI?.Invoke(_remainingTime);
         CheckForTimerEnd();
     }
 
     private void CheckForTimerEnd()
     {
-        if (_remainingSeconds > 0)
+        if (_remainingTime > 0)
             return;
-        _remainingSeconds = 0f;
+        _remainingTime = 0f;
         OnTimerDone?.Invoke();
     }
 }

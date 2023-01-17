@@ -15,8 +15,10 @@ public class Item
     public bool CanSlice { protected set; get; }
     public bool CanCook { protected set; get; }
     public bool CanWash { protected set; get; }
+    public float InteractDuration { protected set; get; }
     private ItemBags _data;
     public List<Item> CurrentIngredients { protected set; get; }
+    public TimerBehaviour CurrentTimerBehaviour { protected set; get; }
 
     public Item(ItemBags data, ItemObject container = null)
     {
@@ -26,6 +28,7 @@ public class Item
         CanSlice = data.CanSlice;
         CanCook = data.CanCook;
         CanWash = data.CanWash;
+        InteractDuration = data.InteractDuration;
         ItemName = SplitWordsBySpace(Type.ToString());
         ItemContainer = container;
         if(_data.Type is ItemType.Plate or ItemType.CookContainer)
@@ -57,21 +60,23 @@ public class Item
         State++;
     }
 
-    public void Interact()
+    public bool Interact()
     {
         if (CanSlice && State == ItemState.Raw)
         {
             //TODO timer
             var info = _data.IngredientProcessInfo.FirstOrDefault(s => s.State == ItemState.Sliced);
-            if (info == null) return;
+            if (info == null) return false;
             Action onDone = () =>
             {
                 ChangeState(info.State);
                 ItemContainer.ChangeMesh(info);
                 Debug.Log($"{Type} sliced");
             };
-            var timer = TimerManager.GetTimerBehaviour();
-            timer.Initialize(0.5f, onDone);
+            if (CurrentTimerBehaviour != null) return true;
+            CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
+            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
+            return true;
         }
 
         if (CanWash)
@@ -81,10 +86,13 @@ public class Item
                 OnWashComplete?.Invoke(ItemType.Plate);
                 Debug.Log($"{Type} washed");
             };
-            var timer = TimerManager.GetTimerBehaviour();
-            timer.Initialize(0.5f, onDone);
+            if (CurrentTimerBehaviour != null) return true;
+            CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
+            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
+            return true;
         }
 
+        return false;
         //TODO fire extinguisher
     }
 

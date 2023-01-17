@@ -12,14 +12,14 @@ public class PlayerInputSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _joinedBtn.onClick.AddListener(JoinPlayer);
+        // _joinedBtn.onClick.AddListener(JoinPlayer);
     }
 
-    private void OnApplicationQuit()
-    {
-        _joinedBtn.onClick.RemoveListener(JoinPlayer);
-
-    }
+    // private void OnApplicationQuit()
+    // {
+    //     _joinedBtn.onClick.RemoveListener(JoinPlayer);
+    //
+    // }
 
     // Update is called once per frame
     void Update()

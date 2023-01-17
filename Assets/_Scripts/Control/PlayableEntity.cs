@@ -6,7 +6,6 @@ using UnityEngine.Serialization;
 
 public class PlayableEntity : Entity, IPickupHandler
 {
-    //Add the trackable item
     [Header("Detect Radius")] 
     [SerializeField] private float _detectRadius = 0.5f;
     [SerializeField] private Transform _itemPlacement;
@@ -14,6 +13,8 @@ public class PlayableEntity : Entity, IPickupHandler
     public bool HasItem => ItemObj != null;
     public ItemObject ItemObj { get; private set; }
 
+    private TimerBehaviour _timer;
+    private bool _isInteracting = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,20 +28,9 @@ public class PlayableEntity : Entity, IPickupHandler
         InputController.OnInput -= OnInput;
     }
 
-    protected override void Initialize()
-    {
-        base.Initialize();
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnInput(FrameInput input)
     {
+        InteractInterrupted(input);
         InteractItem(input.Interact);
         GrabItem(input.Grab);
     }
@@ -82,14 +72,36 @@ public class PlayableEntity : Entity, IPickupHandler
         var itemTransform = ItemObj.transform;
         itemTransform.SetParent(this.transform, false);
         itemTransform.position = _itemPlacement.position;
+        var item = ItemObj.GetItem();
+        if (item.CurrentTimerBehaviour != null)
+            item.CurrentTimerBehaviour.GetCurrentTimeUI().gameObject.SetActive(false);
         return true;
     }
 
     public void DropItem()
     {
+        var item = ItemObj.GetItem();
+        if (item.CurrentTimerBehaviour != null)
+            item.CurrentTimerBehaviour.GetCurrentTimeUI().gameObject.SetActive(true);
         ItemObj = null;
     }
-    
+
+    private void InteractInterrupted(FrameInput input)
+    {
+        if (_isInteracting && (input.Horizontal > 0 || input.Vertical > 0))
+        {
+            _isInteracting = false;
+            _timer.Interrupted(true);
+        }
+    }
+
+    public void ActivateInteractState(Item item)
+    {
+        _isInteracting = true;
+        _timer = item.CurrentTimerBehaviour;
+        _timer.Interrupted(false);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

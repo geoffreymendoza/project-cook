@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 //TODO make it abstract class
 [System.Serializable]
@@ -37,6 +39,11 @@ public class Interactable : IInteractHandler, IPickupHandler
     public virtual void DropItem()
     {
         ItemObj = null;
+    }
+
+    public void ActivateInteractState(Item item)
+    {
+        
     }
 
     public virtual void SpawnItem(ItemType type)
@@ -178,6 +185,12 @@ public class Sink : Interactable
         CanTriggerInteractInput = true;
     }
 
+    private void UpdateStackCount(ItemType type)
+    {
+        Item.OnWashComplete -= UpdateStackCount;
+        StacksCount--;
+    }
+
     public override bool PickupItem(ItemObject itemObject)
     {
         var currentState = itemObject.GetItem().Type;
@@ -186,6 +199,7 @@ public class Sink : Interactable
         if (StacksCount == 0)
             base.PickupItem(itemObject);
         StacksCount++;
+        Item.OnWashComplete += UpdateStackCount;
         return true;
     }
 }
@@ -200,11 +214,20 @@ public class CounterTable : Interactable
     
     public override bool PickupItem(ItemObject itemObject)
     {
-        var currentState = itemObject.GetItem().CurrentIngredients[0].State;
+        Item itm = itemObject.GetItem();
+        if (itm.CurrentIngredients == null) 
+            return false;
+        var currentState = itm.CurrentIngredients[0].State;
         if (currentState != ItemState.Prepared)
             return false;
         base.PickupItem(itemObject);
-        InvokeOnSpawnItemObject(ItemType.DirtyPlate);
+        Action onDone = () =>
+        {
+            InvokeOnSpawnItemObject(ItemType.DirtyPlate);
+        };
+        var timer = TimerManager.GetTimerBehaviour();
+        timer.Initialize(itm.InteractDuration, false, null, onDone);
+        InvokeRemoveInteractObject();
         return true;
     }
 }
@@ -269,6 +292,7 @@ public interface IPickupHandler
     ItemObject ItemObj { get; }
     bool PickupItem(ItemObject itemObject);
     void DropItem();
+    void ActivateInteractState(Item item);
 }
 
 public enum InteractableType
