@@ -48,7 +48,6 @@ public class Item
         return name;
     }
     
-    //TODO timers before changing state
     public void ChangeState(ItemState newState)
     {
         State = newState;

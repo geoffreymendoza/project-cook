@@ -7,7 +7,6 @@ public static class InteractSystem
 {
     public static void GrabItem(IPickupHandler character, Interactable interactable)
     {
-        //TODO dropping item on the floor
         if (character.HasItem && interactable == null)
         {
             var invisibleTableBag = DataManager.GetInteractData(InteractableType.InvisibleTable);
@@ -92,7 +91,6 @@ public static class InteractSystem
         if ((charItemType is ItemType.Plate && interactableItemType is ItemType.DirtyPlate) ||
             interactableItemType is ItemType.Plate && charItemType is ItemType.DirtyPlate)
         {
-            //TODO sink and dirty table accept multiple plates
             return (null, null);
         }
 

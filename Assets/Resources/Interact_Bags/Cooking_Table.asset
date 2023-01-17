@@ -16,5 +16,6 @@ MonoBehaviour:
   Prefab: {fileID: 4344930919544127564, guid: 90d4f12856b6f16498bbd7d3f411b9b0, type: 3}
   Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   Material: {fileID: 2100000, guid: 00ee81cce187b8a4b8a97edfc47c02fe, type: 2}
+  MaterialEmissive: {fileID: 2100000, guid: 39efd17c3685fac4f8699e7a7cb96927, type: 2}
   ColliderSize: {x: 0, y: 0, z: 0}
   InitialItem: 601

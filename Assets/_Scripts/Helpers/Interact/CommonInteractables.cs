@@ -241,7 +241,6 @@ public class CounterTable : Interactable
     }
 }
 
-//TODO accept multiple plates
 public class DirtyPlateTable : Interactable
 {
     public DirtyPlateTable()
@@ -267,7 +266,6 @@ public class DirtyPlateTable : Interactable
     }
 }
 
-//TODO accept multiple plates
 public class CleanPlateTable : Interactable
 {
     public CleanPlateTable()

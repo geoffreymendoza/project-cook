@@ -78,7 +78,6 @@ public static class RecipeSystem
         {
             //TODO only specified recipe lists on that level
             var currentIngredients = container.CurrentIngredients.Select(c => c.Type).ToArray();
-            //TODO optimized way to search for recipe list
             var possibleRecipeList = (from currentIngredient in currentIngredients 
                                                     from recipeBag in _levelRecipeList 
                                                     from info in recipeBag.IngredientsData 
@@ -86,7 +85,6 @@ public static class RecipeSystem
                                                     select recipeBag).Distinct().ToList();
             if (possibleRecipeList.Count <= 0) return;
 
-            //TODO refactor
             foreach (var rb in possibleRecipeList.Where(rb => 
                          rb.IngredientsData.Length > currentIngredients.Length))
             {
@@ -96,7 +94,6 @@ public static class RecipeSystem
         }
     }
 
-    //TODO refactor
     private static void CheckExactRecipeFromIngredient(Item plate, RecipeBags recipeBag)
     {
         if (recipeBag == null) return;
@@ -140,7 +137,6 @@ public static class RecipeSystem
     
     private static void MoveItemToContainer(Item container, Item ingredient)
     {
-        //TODO if there is existing timer, add the timers
         if (container.Type == ItemType.CookContainer)
         {
             if (container.CurrentTimerBehaviour != null)
