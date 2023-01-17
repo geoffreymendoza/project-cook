@@ -68,6 +68,7 @@ public static class RecipeSystem
         if (container.CurrentIngredients.Count is 0 && ingredient.State != ItemState.Raw)
         {
             if (container.Type is ItemType.CookContainer && !ingredient.CanCook) return;
+            if (container.Type is ItemType.DirtyPlate) return;
             MoveItemToContainer(container, ingredient);
             return;
         }

@@ -4,14 +4,11 @@ using UnityEngine;
 public class InteractObject : MonoBehaviour
 {
     public static event Action<ItemType> OnSpawnDirtyPlate;
-    
     [SerializeField] private Transform _itemPlacement;
     private InteractableType _type;
-    public Transform GetItemPlacement() => _itemPlacement;
-    
     private Interactable _interactable;
     public Interactable GetInteract() => _interactable;
-
+    
     private MeshFilter _meshFilter;
     private Renderer _renderer;
 
@@ -35,10 +32,10 @@ public class InteractObject : MonoBehaviour
                 OnSpawnDirtyPlate -= _interactable.SpawnItem;
                 break;
             case InteractableType.CleanPlateTable:
-                Item.OnWashComplete -= _interactable.SpawnItem;
+                EventCore.OnWashComplete -= _interactable.SpawnItem;
                 break;
             case InteractableType.Sink:
-                Item.OnWashComplete -= OnDestroyInteractObject;
+                EventCore.OnWashComplete -= OnWashComplete;
                 break;
         }
     }
@@ -87,12 +84,18 @@ public class InteractObject : MonoBehaviour
                 OnSpawnDirtyPlate += _interactable.SpawnItem;
                 break;
             case InteractableType.CleanPlateTable:
-                Item.OnWashComplete += _interactable.SpawnItem;
+                EventCore.OnWashComplete += _interactable.SpawnItem;
                 break;
             case InteractableType.Sink:
-                Item.OnWashComplete += OnDestroyInteractObject;
+                EventCore.OnWashComplete += OnWashComplete;
                 break;
         }
+    }
+
+    private void OnWashComplete(ItemType type)
+    {
+        if (_interactable.StacksCount <= 0)
+            OnDestroyInteractObject(type);
     }
 
     private void OnDestroyInteractObject(ItemType type)

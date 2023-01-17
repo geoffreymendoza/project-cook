@@ -7,7 +7,6 @@ using System.Text;
 [System.Serializable]
 public class Item
 {
-    public static event Action<ItemType> OnWashComplete;
     public ItemType Type { protected set; get; }
     public ItemState State { protected set; get; }
     public string ItemName { protected set; get; }
@@ -31,7 +30,7 @@ public class Item
         InteractDuration = data.InteractDuration;
         ItemName = SplitWordsBySpace(Type.ToString());
         ItemContainer = container;
-        if(_data.Type is ItemType.Plate or ItemType.CookContainer)
+        if(_data.Type is ItemType.Plate or ItemType.CookContainer or ItemType.DirtyPlate)
             CurrentIngredients = new List<Item>();
     }
 
@@ -82,7 +81,8 @@ public class Item
             if (CurrentTimerBehaviour != null) return true;
             Action onDone = () =>
             {
-                OnWashComplete?.Invoke(ItemType.Plate);
+                EventCore.InvokeOnWashComplete(ItemType.Plate);
+                //OnWashComplete?.Invoke(ItemType.Plate);
                 Debug.Log($"{Type} washed");
             };
             CreateTimerUI(onDone);
@@ -100,8 +100,6 @@ public class Item
     public void CreateTimerUI(Action onDone)
     {
         CreateTimerUI(InteractDuration, onDone);
-        // CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
-        // CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
     }
     
     public void CreateTimerUI(float duration, Action onDone)
