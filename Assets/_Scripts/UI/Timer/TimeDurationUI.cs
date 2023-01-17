@@ -16,6 +16,7 @@ public class TimeDurationUI : MonoBehaviour
 
     public void Initialize(float startDuration, Transform parent, Timer timer)
     {
+        _slider.direction = Slider.Direction.RightToLeft;
         // this.transform.position = position;
         transform.SetParent(parent, false);
         transform.position = parent.position;
