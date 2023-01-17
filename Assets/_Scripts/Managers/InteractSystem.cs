@@ -5,11 +5,6 @@ using UnityEngine;
 
 public static class InteractSystem
 {
-    // public 
-    
-    private static IPickupHandler _character;
-    private static Interactable _interactable;
-    
     public static void GrabItem(IPickupHandler character, Interactable interactable)
     {
         //TODO dropping item on the floor
@@ -27,14 +22,12 @@ public static class InteractSystem
         
         if (interactable == null) return;
         
-        // character don't have item and interact table have
         if (!character.HasItem && interactable.HasItem)
         {
             PickupItemByCharacter(character, interactable);
             return;
         }
 
-        // character have item and interact table don't have
         if (character.HasItem && !interactable.HasItem)
         {
             PickupItemByInteractable(character, interactable);
@@ -44,8 +37,6 @@ public static class InteractSystem
         //TODO only plate is acceptable and pot
         if (character.HasItem && interactable.HasItem)
         {
-            _character = character;
-            _interactable = interactable;
             var items = GetItems(character, interactable);
             if(items.Container == null) return;
             RecipeSystem.CombineItem(items.Container, items.ItemToCombine);

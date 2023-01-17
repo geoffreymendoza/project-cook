@@ -16,7 +16,7 @@ public class Item
     public bool CanCook { protected set; get; }
     public bool CanWash { protected set; get; }
     public float InteractDuration { protected set; get; }
-    private ItemBags _data;
+    public ItemBags _data;
     public List<Item> CurrentIngredients { protected set; get; }
     public TimerBehaviour CurrentTimerBehaviour { protected set; get; }
 
@@ -64,41 +64,55 @@ public class Item
     {
         if (CanSlice && State == ItemState.Raw)
         {
-            //TODO timer
             var info = _data.IngredientProcessInfo.FirstOrDefault(s => s.State == ItemState.Sliced);
             if (info == null) return false;
+            if (CurrentTimerBehaviour != null) return true;
             Action onDone = () =>
             {
                 ChangeState(info.State);
                 ItemContainer.ChangeMesh(info);
                 Debug.Log($"{Type} sliced");
             };
-            if (CurrentTimerBehaviour != null) return true;
-            CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
-            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
+            CreateTimerUI(onDone);
             return true;
         }
 
         if (CanWash)
         {
+            if (CurrentTimerBehaviour != null) return true;
             Action onDone = () =>
             {
                 OnWashComplete?.Invoke(ItemType.Plate);
                 Debug.Log($"{Type} washed");
             };
-            if (CurrentTimerBehaviour != null) return true;
-            CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
-            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
+            CreateTimerUI(onDone);
             return true;
         }
-
-        return false;
         //TODO fire extinguisher
+        return false;
     }
 
     public void AddIngredient(Item ingredient)
     {
         CurrentIngredients.Add(ingredient);
+    }
+
+    public void CreateTimerUI(Action onDone)
+    {
+        CreateTimerUI(InteractDuration, onDone);
+        // CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
+        // CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
+    }
+    
+    public void CreateTimerUI(float duration, Action onDone)
+    {
+        CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
+        CurrentTimerBehaviour.Initialize(duration, true, ItemContainer.transform, onDone);
+    }
+
+    public void ExtendTime(float duration)
+    {
+        CurrentTimerBehaviour.GetCurrentTimeUI().UpdateSlider(duration);
     }
 }
 

@@ -28,10 +28,9 @@ public static class RecipeSystem
         _levelRecipeList.Add(rb2);
         _levelRecipeList.Add(rb3);
         _levelRecipeList.Add(rb4);
-        Debug.Log(_levelRecipeList.Count);
+        // Debug.Log(_levelRecipeList.Count);
     }
 
-    //basic combination first
     public static void CombineItem(Item container, Item ingredient)
     {
         bool CombineHoldingPlate(Item plateItem, Item cookingContainer)
@@ -120,21 +119,19 @@ public static class RecipeSystem
         ItemType finalRecipeType = ItemType.Unassigned;
         foreach (var recipe in _levelRecipeList)
         {
-            //TODO refactor and check if all item states are equal also
-            // Debug.Log(recipe.Type);
+            //TODO check if all item states are equal also
             var recipeItemTypes = recipe.IngredientsData.Select(x => x.IngredientType).ToList();
             exactRecipe = currentIngredientInfoList.IsEqual(recipeItemTypes);
-            // Debug.Log(exactRecipe);
             if (!exactRecipe) continue;
             finalRecipeType = recipe.Type;
             break;
         }
-
         if (!exactRecipe) return false;
         
         var itemData = DataManager.GetItemData(finalRecipeType);
         var instanceItem = new Item(itemData);
         plateItem.AddIngredient(instanceItem);
+        plateItem.ItemContainer.ChangeMesh(itemData);
         cookingContainer.CurrentIngredients.Clear();
         Debug.Log($"Recipe Created: {instanceItem.Type}!");
         return true;
@@ -142,12 +139,18 @@ public static class RecipeSystem
     
     private static void MoveItemToContainer(Item container, Item ingredient)
     {
+        //TODO if there is existing timer, add the timers
         if (container.Type == ItemType.CookContainer)
         {
-            var timer = TimerManager.GetTimerBehaviour();
-            Action onDone = ingredient.UpStateByOne;
-            // timer.Initialize(0.5f, onDone);
-            timer.Initialize(ingredient.InteractDuration, true, container.ItemContainer.transform, onDone);
+            if (container.CurrentTimerBehaviour != null)
+            {
+                container.ExtendTime(ingredient.InteractDuration);
+            }
+            else
+            {
+                Action onDone = ingredient.UpStateByOne;
+                container.CreateTimerUI(ingredient.InteractDuration,onDone);
+            }
         }
         container.AddIngredient(ingredient);
 

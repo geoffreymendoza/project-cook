@@ -31,6 +31,11 @@ public class ItemObject : MonoBehaviour
 
     public void ChangeMesh(ItemBags data)
     {
+        if (data.Mesh == null)
+        {
+            Debug.Log($"Prepare the mesh for these");
+            return;  
+        }
         _meshFilter.sharedMesh = data.Mesh;
         _renderer.material = data.Material;
     }

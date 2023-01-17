@@ -23,6 +23,11 @@ public class Timer
         _remainingTime = duration;
     }
 
+    public void ExtendDuration(float duration)
+    {
+        _remainingTime += duration;
+    }
+
     public void Tick(float deltaTime)
     {
         if (_remainingTime <= 0f)
