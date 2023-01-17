@@ -33,26 +33,22 @@ public class PlayableEntity : Entity, IPickupHandler
 
     private void Update()
     {
+        CheckHighlightObject();
+    }
+
+    private void CheckHighlightObject()
+    {
         var colliders = Physics.OverlapSphere(_itemPlacement.position, _detectRadius, Data.InteractableLayerMask);
         if (colliders.Length <= 0)
         {
             if (_highlightedObject != null)
-            {
                 _highlightedObject.HighlightObject(_currentHighlightData.Material);
-            }
-            
-            //TODO return back to normal 
-            //_arrowIndicatorUI.Activate(false);
             return;
         }
-        //TODO turn material into emission one
         colliders[0].TryGetComponent(out InteractObject interObj);
-        //_currentHighlightData = DataManager.GetInteractData(interObj.GetInteractType());
         _highlightedObject = interObj;
         _currentHighlightData = _highlightedObject.Data;
         _highlightedObject.HighlightObject(_currentHighlightData.MaterialEmissive);
-        // _arrowIndicatorUI.Activate(true);
-        // _arrowIndicatorUI.UpdatePosition(colliders[0].transform.position);
     }
 
     private void OnInput(FrameInput input)
