@@ -14,9 +14,11 @@ public class TimeDurationUI : MonoBehaviour
         _onUpdateUI -= OnUpdateUI;
     }
 
-    public void Initialize(float startDuration, Vector3 position, Timer timer)
+    public void Initialize(float startDuration, Transform parent, Timer timer)
     {
-        this.transform.position = position;
+        // this.transform.position = position;
+        transform.SetParent(parent, false);
+        transform.position = parent.position;
         _slider.maxValue = startDuration;
         timer.OnUpdateTimeUI += OnUpdateUI;
         timer.OnTimerDone += OnTimerDone;

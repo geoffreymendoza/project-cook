@@ -75,7 +75,7 @@ public class Item
             };
             if (CurrentTimerBehaviour != null) return true;
             CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
-            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform.position, onDone);
+            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
             return true;
         }
 
@@ -88,7 +88,7 @@ public class Item
             };
             if (CurrentTimerBehaviour != null) return true;
             CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
-            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform.position, onDone);
+            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
             return true;
         }
 

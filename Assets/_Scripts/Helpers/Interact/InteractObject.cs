@@ -38,7 +38,7 @@ public class InteractObject : MonoBehaviour
                 Item.OnWashComplete -= _interactable.SpawnItem;
                 break;
             case InteractableType.Sink:
-                Item.OnWashComplete -= OnWashComplete;
+                Item.OnWashComplete -= OnDestroyInteractObject;
                 break;
         }
     }
@@ -90,12 +90,12 @@ public class InteractObject : MonoBehaviour
                 Item.OnWashComplete += _interactable.SpawnItem;
                 break;
             case InteractableType.Sink:
-                Item.OnWashComplete += OnWashComplete;
+                Item.OnWashComplete += OnDestroyInteractObject;
                 break;
         }
     }
 
-    private void OnWashComplete(ItemType type)
+    private void OnDestroyInteractObject(ItemType type)
     {
         Destroy(_interactable.ItemObj.gameObject);
     }

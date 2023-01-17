@@ -2,30 +2,31 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class TimerBehaviour : MonoBehaviour
 {
     private Timer _timer;
     private bool _showUI = false;
-    private Vector3 _spawnPosition;
 
-    [SerializeField] private TimeDurationUI _timeUI;
+    [SerializeField] private TimeDurationUI _timeUIPrefab;
 
+    private TimeDurationUI _currentTimeUI;
+    public TimeDurationUI GetCurrentTimeUI() => _currentTimeUI;
     private bool _interrupted = false;
     
     private bool _init = false;
-    public void Initialize(float duration, bool showUI, Vector3 spawnPos, Action onTimerDoneAction = null)
+    public void Initialize(float duration, bool showUI, Transform parent, Action onTimerDoneAction = null)
     {
         if(_init) return;
         _showUI = showUI;
-        _spawnPosition = spawnPos;
         _timer = new Timer(duration);
         _timer.OnTimerDone += onTimerDoneAction;
         _timer.OnTimerDone += OnTimerDone;
         if (_showUI)
         {
-            var timeUI = Instantiate(_timeUI);
-            timeUI.Initialize(duration, _spawnPosition, _timer);
+            _currentTimeUI = Instantiate(_timeUIPrefab);
+            _currentTimeUI.Initialize(duration, parent, _timer);
         }
         _init = true;
     }

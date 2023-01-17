@@ -8,13 +8,13 @@ public class ItemObject : MonoBehaviour
     private Item _item;
     public Item GetItem() => _item;
 
-    private MeshFilter _meshFilter;
-    private Renderer _renderer;
+    [SerializeField] private MeshFilter _meshFilter;
+    [SerializeField] private Renderer _renderer;
 
     private void Awake()
     {
-        _meshFilter = GetComponent<MeshFilter>();
-        _renderer = GetComponent<Renderer>();
+        // _meshFilter = GetComponent<MeshFilter>();
+        // _renderer = GetComponent<Renderer>();
     }
 
     private bool _init = false;

@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fcb342e868353b4ba9da266e9ca987b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeUI: {fileID: 5365529840022300555, guid: df2c607ab5eb7f04894ff8e6717786c4, type: 3}
+  _timeUIPrefab: {fileID: 5365529840022300555, guid: df2c607ab5eb7f04894ff8e6717786c4, type: 3}

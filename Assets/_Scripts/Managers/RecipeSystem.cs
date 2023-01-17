@@ -147,7 +147,7 @@ public static class RecipeSystem
             var timer = TimerManager.GetTimerBehaviour();
             Action onDone = ingredient.UpStateByOne;
             // timer.Initialize(0.5f, onDone);
-            timer.Initialize(ingredient.InteractDuration, true, container.ItemContainer.transform.position, onDone);
+            timer.Initialize(ingredient.InteractDuration, true, container.ItemContainer.transform, onDone);
         }
         container.AddIngredient(ingredient);
 

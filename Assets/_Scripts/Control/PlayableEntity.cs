@@ -6,7 +6,6 @@ using UnityEngine.Serialization;
 
 public class PlayableEntity : Entity, IPickupHandler
 {
-    //Add the trackable item
     [Header("Detect Radius")] 
     [SerializeField] private float _detectRadius = 0.5f;
     [SerializeField] private Transform _itemPlacement;
@@ -27,18 +26,6 @@ public class PlayableEntity : Entity, IPickupHandler
     private void OnApplicationQuit()
     {
         InputController.OnInput -= OnInput;
-    }
-
-    protected override void Initialize()
-    {
-        base.Initialize();
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnInput(FrameInput input)
@@ -85,11 +72,17 @@ public class PlayableEntity : Entity, IPickupHandler
         var itemTransform = ItemObj.transform;
         itemTransform.SetParent(this.transform, false);
         itemTransform.position = _itemPlacement.position;
+        var item = ItemObj.GetItem();
+        if (item.CurrentTimerBehaviour != null)
+            item.CurrentTimerBehaviour.GetCurrentTimeUI().gameObject.SetActive(false);
         return true;
     }
 
     public void DropItem()
     {
+        var item = ItemObj.GetItem();
+        if (item.CurrentTimerBehaviour != null)
+            item.CurrentTimerBehaviour.GetCurrentTimeUI().gameObject.SetActive(true);
         ItemObj = null;
     }
 
@@ -98,7 +91,6 @@ public class PlayableEntity : Entity, IPickupHandler
         if (_isInteracting && (input.Horizontal > 0 || input.Vertical > 0))
         {
             _isInteracting = false;
-            //TODO interrupt timer
             _timer.Interrupted(true);
         }
     }
