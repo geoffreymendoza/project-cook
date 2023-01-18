@@ -6,30 +6,17 @@ using System.Linq;
 
 public static class RecipeSystem
 {
-    private static Dictionary<ItemType, RecipeBags> _recipeData = new Dictionary<ItemType, RecipeBags>();
     private static List<RecipeBags> _levelRecipeList = new List<RecipeBags>();
     
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void Initialize()
+    public static void AddRecipeList(List<RecipeBags> recipe)
     {
-        var recipeBags = Resources.LoadAll<RecipeBags>(Data.RECIPE_BAGS_PATH);
-        foreach (var rb in recipeBags)
-        {
-            _recipeData[rb.Type] = rb;
-        }
-        
-        //TODO Level System to handle below recipes
         _levelRecipeList.Clear();
-        _recipeData.TryGetValue(ItemType.TomatoSoup, out RecipeBags rb1);
-        _recipeData.TryGetValue(ItemType.MushroomSoup, out RecipeBags rb2);
-        _recipeData.TryGetValue(ItemType.OnionSoup, out RecipeBags rb3);
-        _recipeData.TryGetValue(ItemType.FishSashimi, out RecipeBags rb4);
-        _recipeData.TryGetValue(ItemType.ShrimpSashimi, out RecipeBags rb5);
-        _levelRecipeList.Add(rb1);
-        _levelRecipeList.Add(rb2);
-        _levelRecipeList.Add(rb3);
-        _levelRecipeList.Add(rb4);
-        _levelRecipeList.Add(rb5);
+        _levelRecipeList = recipe;
+        
+        foreach (var rb in _levelRecipeList)
+        {
+            Debug.Log($"Recipe: {rb.Type} is added");
+        }
     }
 
     public static void CombineItem(Item container, Item ingredient)

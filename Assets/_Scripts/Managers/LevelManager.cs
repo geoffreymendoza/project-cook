@@ -20,7 +20,22 @@ public static class LevelManager
     public static void SpawnLevelToScene()
     {
         GetLevelObject(_currentLevel);
+        //RecipeSystem.ClearRecipeList();
+        var data = DataManager.GetLevelData(_currentLevel);
+        List<RecipeBags> recipeList = new List<RecipeBags>();
+        foreach (var rd in data.Orders)
+        {
+            var recipe = DataManager.GetRecipeData(rd.RecipeType);
+            recipeList.Add(recipe);
+        }
+        RecipeSystem.AddRecipeList(recipeList);
     }
+}
+
+[System.Serializable]
+public class RecipeData
+{
+    public ItemType RecipeType;
 }
 
 public enum LevelType

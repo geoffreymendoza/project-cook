@@ -15,3 +15,6 @@ MonoBehaviour:
   Type: 1
   LevelPrefab: {fileID: 1697480390136464183, guid: c6cb041c23f13d4489fbd1f87a8f22ef, type: 3}
   LevelDuration: 180
+  Orders:
+  - RecipeType: 405
+  - RecipeType: 404

@@ -20,7 +20,7 @@ MonoBehaviour:
   InteractDuration: 0.5
   Prefab: {fileID: 7827253254451878523, guid: 32100b2397be6df439c796c75ba266e3, type: 3}
   Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  Material: {fileID: 2100000, guid: 90dd57d19bb353a46a815fca169da132, type: 2}
+  Material: {fileID: 2100000, guid: 680383d68ab41ec498cd82ec66b7d722, type: 2}
   IngredientProcessInfo:
   - State: 2
     Mesh: {fileID: 0}
