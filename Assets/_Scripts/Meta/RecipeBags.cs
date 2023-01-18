@@ -6,6 +6,9 @@ using UnityEngine;
 public class RecipeBags : ScriptableObject
 {
     public ItemType Type;
+    public Sprite Sprite;
+    public float IntervalOrderDuration;
+    public float WaitingOrderDuration;
     public IngredientsInfo[] IngredientsData;
 }
 
@@ -14,6 +17,7 @@ public class IngredientsInfo
 {
     public ItemType IngredientType;
     public ItemState IngredientState;
+    public Sprite IngredientSprite;
 
     public IngredientsInfo()
     {

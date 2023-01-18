@@ -12,7 +12,7 @@ public class PlayableEntity : Entity, IPickupHandler
     public bool HasItem => ItemObj != null;
     public ItemObject ItemObj { get; private set; }
 
-    private TimerBehaviour _timer;
+    private WorldSpaceTimerBehaviour _worldSpaceTimer;
     private bool _isInteracting = false;
     
     //TODO temporary
@@ -96,16 +96,16 @@ public class PlayableEntity : Entity, IPickupHandler
         itemTransform.SetParent(this.transform, false);
         itemTransform.position = _itemPlacement.position;
         var item = ItemObj.GetItem();
-        if (item.CurrentTimerBehaviour != null)
-            item.CurrentTimerBehaviour.GetCurrentTimeUI().gameObject.SetActive(false);
+        if (item.CurrentWorldSpaceTimerBehaviour != null)
+            item.CurrentWorldSpaceTimerBehaviour.GetCurrentTimeUI().gameObject.SetActive(false);
         return true;
     }
 
     public void DropItem()
     {
         var item = ItemObj.GetItem();
-        if (item.CurrentTimerBehaviour != null)
-            item.CurrentTimerBehaviour.GetCurrentTimeUI().gameObject.SetActive(true);
+        if (item.CurrentWorldSpaceTimerBehaviour != null)
+            item.CurrentWorldSpaceTimerBehaviour.GetCurrentTimeUI().gameObject.SetActive(true);
         ItemObj = null;
     }
 
@@ -114,15 +114,15 @@ public class PlayableEntity : Entity, IPickupHandler
         if (_isInteracting && (input.Horizontal > 0 || input.Vertical > 0))
         {
             _isInteracting = false;
-            _timer.Interrupted(true);
+            _worldSpaceTimer.Interrupted(true);
         }
     }
 
     public void ActivateInteractState(Item item)
     {
         _isInteracting = true;
-        _timer = item.CurrentTimerBehaviour;
-        _timer.Interrupted(false);
+        _worldSpaceTimer = item.CurrentWorldSpaceTimerBehaviour;
+        _worldSpaceTimer.Interrupted(false);
     }
 
     private void OnDrawGizmos()

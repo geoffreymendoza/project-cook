@@ -140,7 +140,7 @@ public static class RecipeSystem
     {
         if (container.Type == ItemType.CookContainer)
         {
-            if (container.CurrentTimerBehaviour != null)
+            if (container.CurrentWorldSpaceTimerBehaviour != null)
             {
                 container.ExtendTime(ingredient.InteractDuration);
             }

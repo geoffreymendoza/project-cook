@@ -9,8 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9abb56e349869214b8a86f4eb4df2dc2, type: 3}
-  m_Name: UI_Time_Duration
+  m_Script: {fileID: 11500000, guid: 13497fa873beb564fbabc872f3883437, type: 3}
+  m_Name: Level02_Soup
   m_EditorClassIdentifier: 
-  Type: 1
-  Prefab: {fileID: 5129120021363869233, guid: 86c952de036206a4ca0533b97627e43e, type: 3}
+  Type: 2
+  LevelPrefab: {fileID: 0}
+  LevelDuration: 180
+  Orders:
+  - RecipeType: 401
+  - RecipeType: 402
+  - RecipeType: 403

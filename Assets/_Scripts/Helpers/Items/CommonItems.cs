@@ -17,7 +17,7 @@ public class Item
     public float InteractDuration { protected set; get; }
     public ItemBags _data;
     public List<Item> CurrentIngredients { protected set; get; }
-    public TimerBehaviour CurrentTimerBehaviour { protected set; get; }
+    public WorldSpaceTimerBehaviour CurrentWorldSpaceTimerBehaviour { protected set; get; }
 
     public Item(ItemBags data, ItemObject container = null)
     {
@@ -64,7 +64,7 @@ public class Item
         {
             var info = _data.IngredientProcessInfo.FirstOrDefault(s => s.State == ItemState.Sliced);
             if (info == null) return false;
-            if (CurrentTimerBehaviour != null) return true;
+            if (CurrentWorldSpaceTimerBehaviour != null) return true;
             Action onDone = () =>
             {
                 ChangeState(info.State);
@@ -77,7 +77,7 @@ public class Item
 
         if (CanWash)
         {
-            if (CurrentTimerBehaviour != null) return true;
+            if (CurrentWorldSpaceTimerBehaviour != null) return true;
             Action onDone = () =>
             {
                 EventCore.InvokeOnWashComplete(ItemType.Plate);
@@ -103,13 +103,13 @@ public class Item
     
     public void CreateTimerUI(float duration, Action onDone)
     {
-        CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
-        CurrentTimerBehaviour.Initialize(duration, true, ItemContainer.transform, onDone);
+        CurrentWorldSpaceTimerBehaviour = TimerManager.GetWorldSpaceTimerBehaviour();
+        CurrentWorldSpaceTimerBehaviour.Initialize(duration, true, ItemContainer.transform, onDone);
     }
 
     public void ExtendTime(float duration)
     {
-        CurrentTimerBehaviour.GetCurrentTimeUI().UpdateSlider(duration);
+        CurrentWorldSpaceTimerBehaviour.GetCurrentTimeUI().UpdateSlider(duration);
     }
 }
 

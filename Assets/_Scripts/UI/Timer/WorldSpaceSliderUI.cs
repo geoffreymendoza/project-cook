@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TimeDurationUI : MonoBehaviour
+public class WorldSpaceSliderUI : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
     private Timer _currentTimer;

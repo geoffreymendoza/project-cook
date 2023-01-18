@@ -234,7 +234,7 @@ public class CounterTable : Interactable
         {
             InvokeOnSpawnItemObject(ItemType.DirtyPlate);
         };
-        var timer = TimerManager.GetTimerBehaviour();
+        var timer = TimerManager.GetWorldSpaceTimerBehaviour();
         timer.Initialize(itm.InteractDuration, false, null, onDone);
         InvokeRemoveInteractObject();
         return true;

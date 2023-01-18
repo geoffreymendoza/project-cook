@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Tomato_Soup
   m_EditorClassIdentifier: 
   Type: 401
+  Sprite: {fileID: 21300000, guid: b9246e57097c35b4eb6387756d1f226f, type: 3}
+  IntervalOrderDuration: 7
+  WaitingOrderDuration: 20
   IngredientsData:
   - IngredientType: 1
     IngredientState: 3
+    IngredientSprite: {fileID: 21300000, guid: 791b7378813f25e4e9a1cf9cde6c458c, type: 3}
   - IngredientType: 1
     IngredientState: 3
+    IngredientSprite: {fileID: 21300000, guid: 791b7378813f25e4e9a1cf9cde6c458c, type: 3}

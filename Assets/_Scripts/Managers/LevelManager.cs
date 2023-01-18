@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class LevelManager
 {
     private static LevelType _currentLevel;
+    public static LevelType GetCurrentLevel() => _currentLevel;
     public static GameObject GetLevelObject(LevelType type)
     {
         var data = DataManager.GetLevelData(type);
@@ -17,18 +19,15 @@ public static class LevelManager
         _currentLevel = level;
     }
 
+    public static float GetCurrentLevelDuration()
+    {
+        var data = DataManager.GetLevelData(_currentLevel);
+        return data.LevelDuration;
+    }
+
     public static void SpawnLevelToScene()
     {
         GetLevelObject(_currentLevel);
-        //RecipeSystem.ClearRecipeList();
-        var data = DataManager.GetLevelData(_currentLevel);
-        List<RecipeBags> recipeList = new List<RecipeBags>();
-        foreach (var rd in data.Orders)
-        {
-            var recipe = DataManager.GetRecipeData(rd.RecipeType);
-            recipeList.Add(recipe);
-        }
-        RecipeSystem.AddRecipeList(recipeList);
     }
 }
 

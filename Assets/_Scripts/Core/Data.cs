@@ -19,6 +19,7 @@ public static class Data
     public const string RECIPE_BAGS_PATH = "Recipe_Bags"; 
     public const string UI_BAGS_PATH = "UI_Bags";
     public const string LEVEL_BAGS_PATH = "Level_Bags";
+    public const string SPAWN_BAGS_PATH = "Spawn_Bags";
     
     //SCENE NAMES
     public const string MAIN_MENU_SCENE = "MainMenu";
@@ -33,5 +34,12 @@ public enum EntityType
 {
     Unassigned,
     PlayableCharacter,
+    
+}
+
+public enum SpawnType
+{
+    None,
+    TimerBehaviour,
     
 }

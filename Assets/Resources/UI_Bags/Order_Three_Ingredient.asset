@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abb56e349869214b8a86f4eb4df2dc2, type: 3}
+  m_Name: Order_Three_Ingredient
+  m_EditorClassIdentifier: 
+  Type: 4
+  Prefab: {fileID: 2436951550662781687, guid: 5e4d7c7ebc20a334699bee3b257236d0, type: 3}

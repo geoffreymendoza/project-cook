@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: Shrimp_Sashimi
   m_EditorClassIdentifier: 
   Type: 405
+  Sprite: {fileID: 21300000, guid: 46b7396a3b82f4647b5180342147f56d, type: 3}
+  IntervalOrderDuration: 7
+  WaitingOrderDuration: 20
   IngredientsData:
   - IngredientType: 7
     IngredientState: 2
+    IngredientSprite: {fileID: 21300000, guid: c581db255a17eb242a2ac3b68f758077, type: 3}

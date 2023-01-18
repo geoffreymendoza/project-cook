@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 2436951550662781643}
   - component: {fileID: 2436951550662781684}
   - component: {fileID: 2436951550662781685}
+  - component: {fileID: 4549513195638806080}
   m_Layer: 5
   m_Name: Order_3Item
   m_TagString: Untagged
@@ -554,10 +555,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e375180f04930e546846d89f9e1d8ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
-  Low: {r: 1, g: 0, b: 0, a: 0}
-  High: {r: 0.14365315, g: 1, b: 0, a: 0}
-  Offset: {x: 0, y: 0, z: 0}
+  _slider: {fileID: 2436951552225878834}
+  _image: {fileID: 2436951550936990952}
+  Low: {r: 1, g: 0, b: 0, a: 1}
+  High: {r: 0.14365315, g: 1, b: 0, a: 1}
+--- !u!114 &4549513195638806080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2436951550662781687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca6fbd1c98d14d589c287937406b6eda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sliderBarUI: {fileID: 2436951550662781685}
+  _orderImage: {fileID: 2060616553914381518}
+  _ingredientsImages:
+  - {fileID: 6226968215455805991}
+  - {fileID: 2060616554807331300}
+  - {fileID: 2060616555533303586}
 --- !u!1 &2436951550665980571
 GameObject:
   m_ObjectHideFlags: 0

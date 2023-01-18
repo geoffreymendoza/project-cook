@@ -9,6 +9,7 @@ public static class DataManager
         new Dictionary<string, InteractBags>();
     private static readonly Dictionary<LevelType, LevelBags> _levelData = new Dictionary<LevelType, LevelBags>();
     private static readonly Dictionary<ItemType, RecipeBags> _recipeData = new Dictionary<ItemType, RecipeBags>();
+    private static readonly Dictionary<SpawnType, SpawnBags> _spawnData = new Dictionary<SpawnType, SpawnBags>();
 
     
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -16,27 +17,23 @@ public static class DataManager
     {
         var itemBags = Resources.LoadAll<ItemBags>(Data.ITEM_BAGS_PATH);
         foreach (var ib in itemBags)
-        {
             _itemData[ib.Type] = ib;
-        }
-
+        
         var interactBags = Resources.LoadAll<InteractBags>(Data.INTERACT_BAGS_PATH);
         foreach (var interB in interactBags)
-        {
             _interactableData[interB.Name] = interB;
-        }
         
         var levelBags = Resources.LoadAll<LevelBags>(Data.LEVEL_BAGS_PATH);
         foreach (var lvl in levelBags)
-        {
             _levelData[lvl.Type] = lvl;
-        }
         
         var recipeBags = Resources.LoadAll<RecipeBags>(Data.RECIPE_BAGS_PATH);
         foreach (var rb in recipeBags)
-        {
             _recipeData[rb.Type] = rb;
-        }
+        
+        var spawnBags = Resources.LoadAll<SpawnBags>(Data.SPAWN_BAGS_PATH);
+        foreach (var sb in spawnBags)
+            _spawnData[sb.Type] = sb;
     }
 
     public static ItemBags GetItemData(ItemType type)
@@ -66,5 +63,15 @@ public static class DataManager
     {
         return _levelData.TryGetValue(type, out var lvlBag) ? lvlBag : null;
     }
+
+    public static SpawnBags GetSpawnData(SpawnType type)
+    {
+        return _spawnData.TryGetValue(type, out var spawnBag) ? spawnBag : null;
+    }
     
+    public static T GetSpawnData<T>(SpawnType type)
+    {
+        _spawnData.TryGetValue(type, out var spawnBag);
+        return spawnBag.Prefab.GetComponent<T>();
+    }
 }
