@@ -58,6 +58,17 @@ public static class RecipeSystem
             return CheckExactRecipe(plateItem, cookingContainer);
         }
 
+        (List<RecipeBags> possibleRecipes, ItemType[] currentIngredients)  GetPossibleRecipe()
+        {
+            var currentIngredients = container.CurrentIngredients.Select(c => c.Type).ToArray();
+            var possibleRecipeList = (from currentIngredient in currentIngredients 
+                from recipeBag in _levelRecipeList 
+                from info in recipeBag.IngredientsData 
+                where currentIngredient == info.IngredientType
+                select recipeBag).Distinct().ToList();
+            return (possibleRecipeList, currentIngredients);
+        }
+
         bool combinedAtPlate =  CombineHoldingPlate(container, ingredient);
         if (combinedAtPlate) return;
         
@@ -70,6 +81,13 @@ public static class RecipeSystem
             if (container.Type is ItemType.CookContainer && !ingredient.CanCook) return;
             if (container.Type is ItemType.DirtyPlate) return;
             MoveItemToContainer(container, ingredient);
+            
+            var recipeList = GetPossibleRecipe();
+            foreach (var rb in recipeList.possibleRecipes.Where(rb => 
+                         rb.IngredientsData.Length >= recipeList.currentIngredients.Length))
+            {
+                CheckExactRecipeFromIngredient(container, rb);
+            }
             return;
         }
 
@@ -77,16 +95,11 @@ public static class RecipeSystem
         if (container.CurrentIngredients.Count >= 0 && ingredient.State != ItemState.Raw)
         {
             //TODO only specified recipe lists on that level
-            var currentIngredients = container.CurrentIngredients.Select(c => c.Type).ToArray();
-            var possibleRecipeList = (from currentIngredient in currentIngredients 
-                                                    from recipeBag in _levelRecipeList 
-                                                    from info in recipeBag.IngredientsData 
-                                                    where currentIngredient == info.IngredientType
-                                                    select recipeBag).Distinct().ToList();
-            if (possibleRecipeList.Count <= 0) return;
+            var recipeList = GetPossibleRecipe();
+            if (recipeList.possibleRecipes.Count <= 0) return;
 
-            foreach (var rb in possibleRecipeList.Where(rb => 
-                         rb.IngredientsData.Length > currentIngredients.Length))
+            foreach (var rb in recipeList.possibleRecipes.Where(rb => 
+                         rb.IngredientsData.Length > recipeList.currentIngredients.Length))
             {
                 MoveItemToContainer(container, ingredient);
                 CheckExactRecipeFromIngredient(container, rb);
