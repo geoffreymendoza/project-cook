@@ -4,14 +4,14 @@ using UnityEngine;
 public class InteractObject : MonoBehaviour
 {
     public static event Action<ItemType> OnSpawnDirtyPlate;
-    
     [SerializeField] private Transform _itemPlacement;
     private InteractableType _type;
-    public Transform GetItemPlacement() => _itemPlacement;
-    
+    public InteractableType GetInteractType() => _type;
     private Interactable _interactable;
     public Interactable GetInteract() => _interactable;
-
+    
+    public InteractBags Data { private set; get; }
+    
     private MeshFilter _meshFilter;
     private Renderer _renderer;
 
@@ -35,12 +35,17 @@ public class InteractObject : MonoBehaviour
                 OnSpawnDirtyPlate -= _interactable.SpawnItem;
                 break;
             case InteractableType.CleanPlateTable:
-                Item.OnWashComplete -= _interactable.SpawnItem;
+                EventCore.OnWashComplete -= _interactable.SpawnItem;
                 break;
             case InteractableType.Sink:
-                Item.OnWashComplete -= OnDestroyInteractObject;
+                EventCore.OnWashComplete -= OnWashComplete;
                 break;
         }
+    }
+
+    public void HighlightObject(Material material)
+    {
+        _renderer.material = material;
     }
 
     private bool _init = false;
@@ -73,6 +78,7 @@ public class InteractObject : MonoBehaviour
         _renderer.material = data.Material;
 
         _type = data.Type;
+        Data = data;
 
         switch (_type)
         {
@@ -87,12 +93,18 @@ public class InteractObject : MonoBehaviour
                 OnSpawnDirtyPlate += _interactable.SpawnItem;
                 break;
             case InteractableType.CleanPlateTable:
-                Item.OnWashComplete += _interactable.SpawnItem;
+                EventCore.OnWashComplete += _interactable.SpawnItem;
                 break;
             case InteractableType.Sink:
-                Item.OnWashComplete += OnDestroyInteractObject;
+                EventCore.OnWashComplete += OnWashComplete;
                 break;
         }
+    }
+
+    private void OnWashComplete(ItemType type)
+    {
+        if (_interactable.StacksCount <= 0)
+            OnDestroyInteractObject(type);
     }
 
     private void OnDestroyInteractObject(ItemType type)
@@ -108,7 +120,6 @@ public class InteractObject : MonoBehaviour
     private void OnSpawnDirtyPlateObject(ItemType type)
     {
         //TODO move to object pooling and timer
-        // Destroy(_interactable.ItemObj.gameObject);
         OnSpawnDirtyPlate?.Invoke(type);
     }
 

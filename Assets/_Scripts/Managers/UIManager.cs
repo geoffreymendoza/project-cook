@@ -34,5 +34,6 @@ public enum UIType
 {
     None,
     WorldSpaceTimeDuration,
+    WorldSpaceArrowIndicator,
     
 }

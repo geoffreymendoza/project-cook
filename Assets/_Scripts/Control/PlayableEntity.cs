@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayableEntity : Entity, IPickupHandler
 {
@@ -15,6 +14,10 @@ public class PlayableEntity : Entity, IPickupHandler
 
     private TimerBehaviour _timer;
     private bool _isInteracting = false;
+    
+    //TODO temporary
+    private InteractObject _highlightedObject;
+    private InteractBags _currentHighlightData;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +29,26 @@ public class PlayableEntity : Entity, IPickupHandler
     private void OnApplicationQuit()
     {
         InputController.OnInput -= OnInput;
+    }
+
+    private void Update()
+    {
+        CheckHighlightObject();
+    }
+
+    private void CheckHighlightObject()
+    {
+        var colliders = Physics.OverlapSphere(_itemPlacement.position, _detectRadius, Data.InteractableLayerMask);
+        if (colliders.Length <= 0)
+        {
+            if (_highlightedObject != null)
+                _highlightedObject.HighlightObject(_currentHighlightData.Material);
+            return;
+        }
+        colliders[0].TryGetComponent(out InteractObject interObj);
+        _highlightedObject = interObj;
+        _currentHighlightData = _highlightedObject.Data;
+        _highlightedObject.HighlightObject(_currentHighlightData.MaterialEmissive);
     }
 
     private void OnInput(FrameInput input)

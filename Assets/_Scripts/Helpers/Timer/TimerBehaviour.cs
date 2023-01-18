@@ -48,8 +48,6 @@ public class TimerBehaviour : MonoBehaviour
     {
         if (!_init) return;
         if (_interrupted) return;
-        //TODO pause if character walk away or in game paused
-        
         _timer.Tick(Time.deltaTime);
     }
 }

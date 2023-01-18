@@ -7,11 +7,12 @@ using UnityEngine.UI;
 public class TimeDurationUI : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
-    private Action<float> _onUpdateUI;
+    private Timer _currentTimer;
 
     private void OnApplicationQuit()
     {
-        _onUpdateUI -= OnUpdateUI;
+        _currentTimer.OnUpdateTimeUI -= OnUpdateUI;
+        _currentTimer.OnTimerDone -= OnTimerDone;
     }
 
     public void Initialize(float startDuration, Transform parent, Timer timer)
@@ -21,8 +22,9 @@ public class TimeDurationUI : MonoBehaviour
         transform.SetParent(parent, false);
         transform.position = parent.position;
         _slider.maxValue = startDuration;
-        timer.OnUpdateTimeUI += OnUpdateUI;
-        timer.OnTimerDone += OnTimerDone;
+        _currentTimer = timer;
+        _currentTimer.OnUpdateTimeUI += OnUpdateUI;
+        _currentTimer.OnTimerDone += OnTimerDone;
     }
 
     private void OnTimerDone()
@@ -33,5 +35,12 @@ public class TimeDurationUI : MonoBehaviour
     private void OnUpdateUI(float duration)
     {
         _slider.value = duration;
+    }
+    
+    public void UpdateSlider(float value)
+    {
+        _slider.maxValue += value;
+        _currentTimer.ExtendDuration(value);
+        // Debug.Log(value);
     }
 }

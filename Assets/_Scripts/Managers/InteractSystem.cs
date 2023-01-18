@@ -5,14 +5,8 @@ using UnityEngine;
 
 public static class InteractSystem
 {
-    // public 
-    
-    private static IPickupHandler _character;
-    private static Interactable _interactable;
-    
     public static void GrabItem(IPickupHandler character, Interactable interactable)
     {
-        //TODO dropping item on the floor
         if (character.HasItem && interactable == null)
         {
             var invisibleTableBag = DataManager.GetInteractData(InteractableType.InvisibleTable);
@@ -27,29 +21,28 @@ public static class InteractSystem
         
         if (interactable == null) return;
         
-        // character don't have item and interact table have
         if (!character.HasItem && interactable.HasItem)
         {
             PickupItemByCharacter(character, interactable);
             return;
         }
 
-        // character have item and interact table don't have
         if (character.HasItem && !interactable.HasItem)
         {
             PickupItemByInteractable(character, interactable);
             return;
         }
 
-        //TODO only plate is acceptable and pot
         if (character.HasItem && interactable.HasItem)
         {
-            _character = character;
-            _interactable = interactable;
             var items = GetItems(character, interactable);
             if(items.Container == null) return;
+            if (items.Container.Type is ItemType.DirtyPlate && items.ItemToCombine.Type is ItemType.DirtyPlate)
+            {
+                PickupItemByInteractable(character, interactable);
+                return;
+            }
             RecipeSystem.CombineItem(items.Container, items.ItemToCombine);
-            //TODO change mesh appearance
         }
     }
 
@@ -65,6 +58,7 @@ public static class InteractSystem
     
     private static void PickupItemByInteractable(IPickupHandler character, Interactable interactable)
     {
+        //TODO HERE
         ItemObject itemObject = character.ItemObj;
         bool pickedUp = interactable.PickupItem(itemObject);
         if(pickedUp)
@@ -94,11 +88,17 @@ public static class InteractSystem
         ItemType charItemType = character.ItemObj.GetItem().Type;
         ItemType interactableItemType = interactable.ItemObj.GetItem().Type;
 
-        //TODO sink and dirty table accept multiple plates
         if ((charItemType is ItemType.Plate && interactableItemType is ItemType.DirtyPlate) ||
             interactableItemType is ItemType.Plate && charItemType is ItemType.DirtyPlate)
         {
             return (null, null);
+        }
+
+        if (charItemType is ItemType.DirtyPlate && interactableItemType is ItemType.DirtyPlate)
+        {
+            container = interactable.ItemObj.GetItem();
+            ingredient = character.ItemObj.GetItem();
+            return (container, ingredient);
         }
 
         if (charItemType is ItemType.Plate or ItemType.CookContainer)

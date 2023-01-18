@@ -28,10 +28,9 @@ public static class RecipeSystem
         _levelRecipeList.Add(rb2);
         _levelRecipeList.Add(rb3);
         _levelRecipeList.Add(rb4);
-        Debug.Log(_levelRecipeList.Count);
+        // Debug.Log(_levelRecipeList.Count);
     }
 
-    //basic combination first
     public static void CombineItem(Item container, Item ingredient)
     {
         bool CombineHoldingPlate(Item plateItem, Item cookingContainer)
@@ -69,6 +68,7 @@ public static class RecipeSystem
         if (container.CurrentIngredients.Count is 0 && ingredient.State != ItemState.Raw)
         {
             if (container.Type is ItemType.CookContainer && !ingredient.CanCook) return;
+            if (container.Type is ItemType.DirtyPlate) return;
             MoveItemToContainer(container, ingredient);
             return;
         }
@@ -78,7 +78,6 @@ public static class RecipeSystem
         {
             //TODO only specified recipe lists on that level
             var currentIngredients = container.CurrentIngredients.Select(c => c.Type).ToArray();
-            //TODO optimized way to search for recipe list
             var possibleRecipeList = (from currentIngredient in currentIngredients 
                                                     from recipeBag in _levelRecipeList 
                                                     from info in recipeBag.IngredientsData 
@@ -86,7 +85,6 @@ public static class RecipeSystem
                                                     select recipeBag).Distinct().ToList();
             if (possibleRecipeList.Count <= 0) return;
 
-            //TODO refactor
             foreach (var rb in possibleRecipeList.Where(rb => 
                          rb.IngredientsData.Length > currentIngredients.Length))
             {
@@ -96,7 +94,6 @@ public static class RecipeSystem
         }
     }
 
-    //TODO refactor
     private static void CheckExactRecipeFromIngredient(Item plate, RecipeBags recipeBag)
     {
         if (recipeBag == null) return;
@@ -120,21 +117,19 @@ public static class RecipeSystem
         ItemType finalRecipeType = ItemType.Unassigned;
         foreach (var recipe in _levelRecipeList)
         {
-            //TODO refactor and check if all item states are equal also
-            // Debug.Log(recipe.Type);
+            //TODO check if all item states are equal also
             var recipeItemTypes = recipe.IngredientsData.Select(x => x.IngredientType).ToList();
             exactRecipe = currentIngredientInfoList.IsEqual(recipeItemTypes);
-            // Debug.Log(exactRecipe);
             if (!exactRecipe) continue;
             finalRecipeType = recipe.Type;
             break;
         }
-
         if (!exactRecipe) return false;
         
         var itemData = DataManager.GetItemData(finalRecipeType);
         var instanceItem = new Item(itemData);
         plateItem.AddIngredient(instanceItem);
+        plateItem.ItemContainer.ChangeMesh(itemData);
         cookingContainer.CurrentIngredients.Clear();
         Debug.Log($"Recipe Created: {instanceItem.Type}!");
         return true;
@@ -144,10 +139,15 @@ public static class RecipeSystem
     {
         if (container.Type == ItemType.CookContainer)
         {
-            var timer = TimerManager.GetTimerBehaviour();
-            Action onDone = ingredient.UpStateByOne;
-            // timer.Initialize(0.5f, onDone);
-            timer.Initialize(ingredient.InteractDuration, true, container.ItemContainer.transform, onDone);
+            if (container.CurrentTimerBehaviour != null)
+            {
+                container.ExtendTime(ingredient.InteractDuration);
+            }
+            else
+            {
+                Action onDone = ingredient.UpStateByOne;
+                container.CreateTimerUI(ingredient.InteractDuration,onDone);
+            }
         }
         container.AddIngredient(ingredient);
 

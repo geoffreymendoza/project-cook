@@ -7,7 +7,6 @@ using System.Text;
 [System.Serializable]
 public class Item
 {
-    public static event Action<ItemType> OnWashComplete;
     public ItemType Type { protected set; get; }
     public ItemState State { protected set; get; }
     public string ItemName { protected set; get; }
@@ -16,7 +15,7 @@ public class Item
     public bool CanCook { protected set; get; }
     public bool CanWash { protected set; get; }
     public float InteractDuration { protected set; get; }
-    private ItemBags _data;
+    public ItemBags _data;
     public List<Item> CurrentIngredients { protected set; get; }
     public TimerBehaviour CurrentTimerBehaviour { protected set; get; }
 
@@ -31,7 +30,7 @@ public class Item
         InteractDuration = data.InteractDuration;
         ItemName = SplitWordsBySpace(Type.ToString());
         ItemContainer = container;
-        if(_data.Type is ItemType.Plate or ItemType.CookContainer)
+        if(_data.Type is ItemType.Plate or ItemType.CookContainer or ItemType.DirtyPlate)
             CurrentIngredients = new List<Item>();
     }
 
@@ -49,7 +48,6 @@ public class Item
         return name;
     }
     
-    //TODO timers before changing state
     public void ChangeState(ItemState newState)
     {
         State = newState;
@@ -64,41 +62,54 @@ public class Item
     {
         if (CanSlice && State == ItemState.Raw)
         {
-            //TODO timer
             var info = _data.IngredientProcessInfo.FirstOrDefault(s => s.State == ItemState.Sliced);
             if (info == null) return false;
+            if (CurrentTimerBehaviour != null) return true;
             Action onDone = () =>
             {
                 ChangeState(info.State);
                 ItemContainer.ChangeMesh(info);
                 Debug.Log($"{Type} sliced");
             };
-            if (CurrentTimerBehaviour != null) return true;
-            CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
-            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
+            CreateTimerUI(onDone);
             return true;
         }
 
         if (CanWash)
         {
+            if (CurrentTimerBehaviour != null) return true;
             Action onDone = () =>
             {
-                OnWashComplete?.Invoke(ItemType.Plate);
+                EventCore.InvokeOnWashComplete(ItemType.Plate);
+                //OnWashComplete?.Invoke(ItemType.Plate);
                 Debug.Log($"{Type} washed");
             };
-            if (CurrentTimerBehaviour != null) return true;
-            CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
-            CurrentTimerBehaviour.Initialize(InteractDuration, true, ItemContainer.transform, onDone);
+            CreateTimerUI(onDone);
             return true;
         }
-
-        return false;
         //TODO fire extinguisher
+        return false;
     }
 
     public void AddIngredient(Item ingredient)
     {
         CurrentIngredients.Add(ingredient);
+    }
+
+    public void CreateTimerUI(Action onDone)
+    {
+        CreateTimerUI(InteractDuration, onDone);
+    }
+    
+    public void CreateTimerUI(float duration, Action onDone)
+    {
+        CurrentTimerBehaviour = TimerManager.GetTimerBehaviour();
+        CurrentTimerBehaviour.Initialize(duration, true, ItemContainer.transform, onDone);
+    }
+
+    public void ExtendTime(float duration)
+    {
+        CurrentTimerBehaviour.GetCurrentTimeUI().UpdateSlider(duration);
     }
 }
 

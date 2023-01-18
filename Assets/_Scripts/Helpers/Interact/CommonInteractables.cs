@@ -8,8 +8,8 @@ using Object = UnityEngine.Object;
 [System.Serializable]
 public class Interactable : IInteractHandler, IPickupHandler
 {
-    public event System.Action OnRemoveInteractObject;
-    public event System.Action<ItemType> OnSpawnItemObject;
+    public event Action OnRemoveInteractObject;
+    public event Action<ItemType> OnSpawnItemObject;
     public InteractableType Type { get; protected set; } = InteractableType.Unassigned;
     //only useful for plates in sink and counter table
     public int StacksCount { get; protected set; } = 0; 
@@ -43,22 +43,27 @@ public class Interactable : IInteractHandler, IPickupHandler
 
     public void ActivateInteractState(Item item)
     {
-        
+        //dud
     }
 
     public virtual void SpawnItem(ItemType type)
     {
         if (StacksCount <= 0)
         {
-            var itemData = DataManager.GetItemData(type);
-            var itemCopy = Object.Instantiate(itemData.Prefab);
-            itemCopy.Initialize(itemData);
-            Transform itemTransform;
-            (itemTransform = itemCopy.transform).SetParent(_itemPlacement.transform, false);
-            itemTransform.position = _itemPlacement.position;
-            ItemObj = itemCopy;
+            SpawnFromData(type);
         }
         StacksCount++;
+    }
+
+    protected void SpawnFromData(ItemType type)
+    {
+        var itemData = DataManager.GetItemData(type);
+        var itemCopy = Object.Instantiate(itemData.Prefab);
+        itemCopy.Initialize(itemData);
+        Transform itemTransform;
+        (itemTransform = itemCopy.transform).SetParent(_itemPlacement.transform, false);
+        itemTransform.position = _itemPlacement.position;
+        ItemObj = itemCopy;
     }
 
     public virtual void InvokeRemoveInteractObject()
@@ -183,12 +188,13 @@ public class Sink : Interactable
         StacksCount = 0;
         Type = InteractableType.Sink;
         CanTriggerInteractInput = true;
+        EventCore.OnWashComplete += UpdateStackCount;
     }
 
     private void UpdateStackCount(ItemType type)
     {
-        Item.OnWashComplete -= UpdateStackCount;
         StacksCount--;
+        
     }
 
     public override bool PickupItem(ItemObject itemObject)
@@ -197,9 +203,12 @@ public class Sink : Interactable
         if (currentState != ItemType.DirtyPlate)
             return false;
         if (StacksCount == 0)
+        {
             base.PickupItem(itemObject);
+        }
+        else
+            Object.Destroy(itemObject.gameObject);
         StacksCount++;
-        Item.OnWashComplete += UpdateStackCount;
         return true;
     }
 }
@@ -232,7 +241,6 @@ public class CounterTable : Interactable
     }
 }
 
-//TODO accept multiple plates
 public class DirtyPlateTable : Interactable
 {
     public DirtyPlateTable()
@@ -252,11 +260,12 @@ public class DirtyPlateTable : Interactable
         if (StacksCount == 0)
         {
             ItemObj = null;
+            return;
         }
+        SpawnFromData(ItemType.DirtyPlate);
     }
 }
 
-//TODO accept multiple plates
 public class CleanPlateTable : Interactable
 {
     public CleanPlateTable()
@@ -276,7 +285,9 @@ public class CleanPlateTable : Interactable
         if (StacksCount == 0)
         {
             ItemObj = null;
+            return;
         }
+        SpawnFromData(ItemType.Plate);
     }
 }
 
