@@ -23,7 +23,7 @@ public class Spawner : MonoBehaviour
         var interactBag = DataManager.GetInteractData(_interactableType, _initialItem);
         // Debug.Log(interactBag.name);
         //TODO get from object pool
-        var interactObj = Instantiate(interactBag.Prefab, this.transform.position, Quaternion.identity);
+         var interactObj = Instantiate(interactBag.Prefab, this.transform.position, Quaternion.identity);
         interactObj.Initialize(interactBag);
         this.gameObject.SetActive(false);
     }

@@ -7,6 +7,7 @@ public static class DataManager
     private static readonly Dictionary<ItemType, ItemBags> _itemData = new Dictionary<ItemType, ItemBags>();
     private static readonly Dictionary<string, InteractBags> _interactableData =
         new Dictionary<string, InteractBags>();
+    private static readonly Dictionary<LevelType, LevelBags> _levelData = new Dictionary<LevelType, LevelBags>();
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initialize()
@@ -21,6 +22,12 @@ public static class DataManager
         foreach (var interB in interactBags)
         {
             _interactableData[interB.Name] = interB;
+        }
+        
+        var levelBags = Resources.LoadAll<LevelBags>(Data.LEVEL_BAGS_PATH);
+        foreach (var lvl in levelBags)
+        {
+            _levelData[lvl.Type] = lvl;
         }
     }
 
@@ -40,5 +47,10 @@ public static class DataManager
         if (itemType != ItemType.NoInitialItem)
             keyString += itemType.ToString();
         return _interactableData.TryGetValue(keyString, out var interactBag) ? interactBag : null;
+    }
+
+    public static LevelBags GetLevelData(LevelType type)
+    {
+        return _levelData.TryGetValue(type, out var lvlBag) ? lvlBag : null;
     }
 }

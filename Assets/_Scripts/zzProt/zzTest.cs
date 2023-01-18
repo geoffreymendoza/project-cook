@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class zzTest : MonoBehaviour
 {
     [SerializeField] private ItemType _itemType;
     [SerializeField] private InteractableType _interactableType;
+
+    [SerializeField] private LevelType _level;
     
     // Start is called before the first frame update
     void Start()
@@ -35,5 +38,12 @@ public class zzTest : MonoBehaviour
         // Debug.Log(interactBag.name);
         // var interactObj = Instantiate(interactBag.Prefab);
         // interactObj.Initialize(interactBag);
+    }
+    
+    [ContextMenu("TestLevel")]
+    public void TestLevel()
+    {
+        LevelManager.LevelToLoad(_level);
+        SceneManager.LoadScene(Data.GAME_SCENE);
     }
 }

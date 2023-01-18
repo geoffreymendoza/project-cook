@@ -24,11 +24,12 @@ public static class RecipeSystem
         _recipeData.TryGetValue(ItemType.MushroomSoup, out RecipeBags rb2);
         _recipeData.TryGetValue(ItemType.OnionSoup, out RecipeBags rb3);
         _recipeData.TryGetValue(ItemType.FishSashimi, out RecipeBags rb4);
+        _recipeData.TryGetValue(ItemType.ShrimpSashimi, out RecipeBags rb5);
         _levelRecipeList.Add(rb1);
         _levelRecipeList.Add(rb2);
         _levelRecipeList.Add(rb3);
         _levelRecipeList.Add(rb4);
-        // Debug.Log(_levelRecipeList.Count);
+        _levelRecipeList.Add(rb5);
     }
 
     public static void CombineItem(Item container, Item ingredient)

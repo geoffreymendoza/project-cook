@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 05fcdc1ae810d7c42871f819ec255808, type: 3}
-  m_Name: Fish_Sashimi
+  m_Name: Shrimp_Sashimi
   m_EditorClassIdentifier: 
-  Type: 404
+  Type: 405
   IngredientsData:
-  - IngredientType: 6
+  - IngredientType: 7
     IngredientState: 2

@@ -10,21 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d075badf1b8f2b4b854dc01c4e23ac2, type: 3}
-  m_Name: Tomato
+  m_Name: Shrimp
   m_EditorClassIdentifier: 
-  Type: 1
+  Type: 7
   State: 1
   CanSlice: 1
-  CanCook: 1
+  CanCook: 0
   CanWash: 0
   InteractDuration: 0.5
   Prefab: {fileID: 7827253254451878523, guid: 32100b2397be6df439c796c75ba266e3, type: 3}
   Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  Material: {fileID: 2100000, guid: b42ba7b0505a5c84498e30d0710879a7, type: 2}
+  Material: {fileID: 2100000, guid: 90dd57d19bb353a46a815fca169da132, type: 2}
   IngredientProcessInfo:
   - State: 2
-    Mesh: {fileID: 0}
-    Material: {fileID: 0}
-  - State: 3
     Mesh: {fileID: 0}
     Material: {fileID: 0}
