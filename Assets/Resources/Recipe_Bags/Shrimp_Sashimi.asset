@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 405
   Sprite: {fileID: 21300000, guid: 46b7396a3b82f4647b5180342147f56d, type: 3}
-  IntervalOrderDuration: 7
+  IntervalOrderDuration: 4
   WaitingOrderDuration: 20
   IngredientsData:
   - IngredientType: 7

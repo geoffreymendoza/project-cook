@@ -226,10 +226,12 @@ public class CounterTable : Interactable
         Item itm = itemObject.GetItem();
         if (itm.CurrentIngredients == null) 
             return false;
-        var currentState = itm.CurrentIngredients[0].State;
+        var dish = itm.CurrentIngredients[0];
+        var currentState = dish.State;
         if (currentState != ItemState.Prepared)
             return false;
         base.PickupItem(itemObject);
+        OrderSystem.ServeOrder(dish.Type);
         Action onDone = () =>
         {
             InvokeOnSpawnItemObject(ItemType.DirtyPlate);

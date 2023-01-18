@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9abb56e349869214b8a86f4eb4df2dc2, type: 3}
   m_Name: Orders_Grid
   m_EditorClassIdentifier: 
-  Type: 3
-  Prefab: {fileID: 8681332203535009810, guid: f8d9b3686690f1f46b938b5a9958d73c, type: 3}
+  Type: 7
+  Prefab: {fileID: 3728703913494096336, guid: b5fdf7efe1129db47843c5be11f13333, type: 3}

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9abb56e349869214b8a86f4eb4df2dc2, type: 3}
   m_Name: Order_Three_Ingredient
   m_EditorClassIdentifier: 
-  Type: 4
+  Type: 6
   Prefab: {fileID: 2436951550662781687, guid: 5e4d7c7ebc20a334699bee3b257236d0, type: 3}

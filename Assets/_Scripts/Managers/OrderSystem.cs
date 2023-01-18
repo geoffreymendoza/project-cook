@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class OrderSystem
 {
     private static List<RecipeBags> _levelRecipeList = new List<RecipeBags>();
-    private static List<ItemType> _currentOrdersList = new List<ItemType>();
+    private static List<OrderBehaviour> _currentOrdersList = new List<OrderBehaviour>();
     private static int _currentOrders;
     private static int _maxOrders = 7;
     
@@ -25,26 +26,30 @@ public static class OrderSystem
         _levelRecipeList = recipe;
     }
 
-    private static void AddOrder(ItemType order)
+    private static void AddOrder()
     {
-        _currentOrdersList.Add(order);
-        SpawnOrderUI();
-        _currentOrders++;
-        Debug.Log($"New order: {order}");
         if (_currentOrders >= _maxOrders) return;
+        SpawnOrder();
         StartOrdering();
     }
 
-    public static void RemoveOrder(ItemType order)
+    public static void RemoveOrder(OrderBehaviour order)
     {
         _currentOrdersList.Remove(order);
         _currentOrders--;
+        AddOrder();
     }
 
-    public static void CheckOrder(ItemType order)
+    public static void ServeOrder(ItemType orderType)
     {
-        //if done remove
-        //check if current order list are not full, then start ordering again
+        Debug.Log(orderType);
+        //if done remove order
+        foreach (var order in _currentOrdersList.Where(t => t.GetOrderType() == orderType))
+        {
+            Debug.Log(order.GetOrderType());
+            order.OrderServed();
+            break;
+        }
     }
 
     public static void StartOrdering()
@@ -59,14 +64,13 @@ public static class OrderSystem
         _currentTimer.Timer.OnTimerDone += OnTimerDone;
     }
 
-    private static void SpawnOrderUI()
+    private static void SpawnOrder()
     {
         RecipeBags orderData = _levelRecipeList[_randomIndex];
         var ingredientsCount = orderData.IngredientsData.Length;
-        Debug.Log(ingredientsCount);
-        var mainCanvas = UIManager.GetMainCanvas();
         if (_ordersGridUI == null)
         {
+             var mainCanvas = UIManager.GetMainCanvas();
             _ordersGridUI = UIManager.GetUIObject(UIType.OrdersGrid);
             _ordersGridUI.transform.SetParent(mainCanvas.transform, false);
         }
@@ -79,12 +83,14 @@ public static class OrderSystem
         };
         orderBehaviour.Initialize(orderData);
         orderBehaviour.transform.SetParent(_ordersGridUI.transform, false);
+        _currentOrdersList.Add(orderBehaviour);
+        _currentOrders++;
+        Debug.Log($"New order: {orderBehaviour.GetOrderType()}");
     }
 
     private static void OnTimerDone()
     {
         _currentTimer.Timer.OnTimerDone -= OnTimerDone;
-        var orderRecipe = _levelRecipeList[_randomIndex].Type;
-        AddOrder(orderRecipe);
+        AddOrder();
     }
 }
