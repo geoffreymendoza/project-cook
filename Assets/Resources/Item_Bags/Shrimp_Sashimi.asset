@@ -19,7 +19,5 @@ MonoBehaviour:
   CanWash: 0
   InteractDuration: 0.5
   Prefab: {fileID: 7827253254451878523, guid: 32100b2397be6df439c796c75ba266e3, type: 3}
-  Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  Material: {fileID: 2100000, guid: 680383d68ab41ec498cd82ec66b7d722, type: 2}
-  Model: {fileID: 122435844056345173, guid: 09f3fd9b4e657b84d8fa26644a1af411, type: 3}
+  Model: {fileID: 3780144332777606849, guid: 72de6060b417d1f4ebbe056402a7adcf, type: 3}
   IngredientProcessInfo: []
