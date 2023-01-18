@@ -104,9 +104,11 @@ public static class RecipeSystem
         ItemType finalRecipeType = recipeBag.Type;
         var itemData = DataManager.GetItemData(finalRecipeType);
         var instanceItem = new Item(itemData);
+        plate.ItemContainer.ChangeMesh(itemData);
         plate.CurrentIngredients.Clear();
         plate.AddIngredient(instanceItem);
         Debug.Log($"Recipe Created: {instanceItem.Type}!");
+        
     }
 
     private static bool CheckExactRecipe(Item plateItem, Item cookingContainer)
@@ -128,6 +130,7 @@ public static class RecipeSystem
         if (!exactRecipe) return false;
         
         var itemData = DataManager.GetItemData(finalRecipeType);
+        // Debug.Log(itemData.name);
         var instanceItem = new Item(itemData);
         plateItem.AddIngredient(instanceItem);
         plateItem.ItemContainer.ChangeMesh(itemData);

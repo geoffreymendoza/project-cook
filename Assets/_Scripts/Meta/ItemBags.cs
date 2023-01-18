@@ -13,8 +13,7 @@ public class ItemBags : ScriptableObject
     public bool CanWash;
     public float InteractDuration;
     public ItemObject Prefab;
-    public Mesh Mesh;
-    public Material Material;
+    public GameObject Model;
     public ProcessInfo[] IngredientProcessInfo;
 }
 
@@ -22,6 +21,5 @@ public class ItemBags : ScriptableObject
 public class ProcessInfo
 {
     public ItemState State;
-    public Mesh Mesh;
-    public Material Material;
+    public GameObject Model;
 }

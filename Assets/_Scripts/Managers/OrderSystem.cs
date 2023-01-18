@@ -43,12 +43,26 @@ public static class OrderSystem
     public static void ServeOrder(ItemType orderType)
     {
         Debug.Log(orderType);
+        bool correctOrder = false;
         //if done remove order
         foreach (var order in _currentOrdersList.Where(t => t.GetOrderType() == orderType))
         {
             Debug.Log(order.GetOrderType());
             order.OrderServed();
+            correctOrder = true;
             break;
+        }
+
+        if (correctOrder)
+        {
+            //ADD SCORE + REMAINING TIME TO SCORE SYSTEM
+            Debug.Log("Correct Order");
+
+        }
+        else
+        {
+            //DEDUCT SCORE TO SCORE SYSTEM
+            Debug.Log("Wrong Order");
         }
     }
 
@@ -57,6 +71,8 @@ public static class OrderSystem
         var inGame = GameManager.StillInGame();
         if (!inGame) return;
         _randomIndex = Random.Range(0, _levelRecipeList.Count);
+        //debug to check if wrong order or not
+        // _randomIndex = 0;
         var instance = DataManager.GetSpawnData<TimerBehaviour>(SpawnType.TimerBehaviour);
         _currentTimer = Object.Instantiate(instance);
         var intervalTime = _levelRecipeList[_randomIndex].IntervalOrderDuration;
@@ -85,7 +101,7 @@ public static class OrderSystem
         orderBehaviour.transform.SetParent(_ordersGridUI.transform, false);
         _currentOrdersList.Add(orderBehaviour);
         _currentOrders++;
-        Debug.Log($"New order: {orderBehaviour.GetOrderType()}");
+        // Debug.Log($"New order: {orderBehaviour.GetOrderType()}");
     }
 
     private static void OnTimerDone()

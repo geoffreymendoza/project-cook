@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d075badf1b8f2b4b854dc01c4e23ac2, type: 3}
-  m_Name: Plate
+  m_Name: Plate_Clean
   m_EditorClassIdentifier: 
   Type: 600
   State: 0
@@ -19,6 +19,7 @@ MonoBehaviour:
   CanWash: 0
   InteractDuration: 0.5
   Prefab: {fileID: 4077663400818467653, guid: 93b39986b0c472f49afe126625587e39, type: 3}
-  Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
-  Material: {fileID: 2100000, guid: 835d621f3f56921438785a0c74676362, type: 2}
+  Mesh: {fileID: 2534964839176971238, guid: d1857d0839eb2e846843d6134af00694, type: 3}
+  Material: {fileID: 2100000, guid: 1fd06c6909282ca4c840be1af174bb88, type: 2}
+  Model: {fileID: 3600373464425075729, guid: 6b5eebfb45e900e478b3771149e5a51a, type: 3}
   IngredientProcessInfo: []

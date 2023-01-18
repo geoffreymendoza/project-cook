@@ -8,14 +8,7 @@ public class ItemObject : MonoBehaviour
     private Item _item;
     public Item GetItem() => _item;
 
-    [SerializeField] private MeshFilter _meshFilter;
-    [SerializeField] private Renderer _renderer;
-
-    private void Awake()
-    {
-        // _meshFilter = GetComponent<MeshFilter>();
-        // _renderer = GetComponent<Renderer>();
-    }
+    [SerializeField] private GameObject _currentModel;
 
     private bool _init = false;
     public void Initialize(ItemBags data)
@@ -31,23 +24,24 @@ public class ItemObject : MonoBehaviour
 
     public void ChangeMesh(ItemBags data)
     {
-        if (data.Mesh == null)
+        if (data.Model == null)
         {
-            Debug.Log($"Prepare the mesh for these");
-            return;  
+            Debug.Log($"Prepare the gameobject for these");
+            return;
         }
-        _meshFilter.sharedMesh = data.Mesh;
-        _renderer.material = data.Material;
+        Destroy(_currentModel);
+        _currentModel = Instantiate(data.Model, this.transform);
     }
 
     public void ChangeMesh(ProcessInfo data)
     {
-        if (data.Mesh == null)
+        if (data.Model == null)
         {
-            Debug.Log($"Prepare the mesh for these");
-            return;  
+            Debug.Log($"Prepare the gameobject for these");
+            return;
         }
-        _meshFilter.sharedMesh = data.Mesh;
-        _renderer.material = data.Material;
+        //TODO just do SetActive
+        Destroy(_currentModel);
+        _currentModel = Instantiate(data.Model, this.transform);
     }
 }
