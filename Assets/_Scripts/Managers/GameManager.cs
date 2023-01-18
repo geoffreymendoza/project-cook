@@ -31,6 +31,7 @@ public static class GameManager
         
         OrderSystem.ResetOrdersList();
         OrderSystem.StartOrdering();
+        ScoreSystem.StartScoring(_inGame);
     }
 
     public static bool StillInGame()

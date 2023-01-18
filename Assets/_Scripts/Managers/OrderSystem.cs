@@ -44,35 +44,30 @@ public static class OrderSystem
     {
         Debug.Log(orderType);
         bool correctOrder = false;
-        //if done remove order
+        //TODO random deduct or which order is currently
+        int scorePoints = 5;
         foreach (var order in _currentOrdersList.Where(t => t.GetOrderType() == orderType))
         {
             Debug.Log(order.GetOrderType());
             order.OrderServed();
             correctOrder = true;
+            scorePoints = order.ScorePoints;
             break;
         }
 
         if (correctOrder)
-        {
-            //ADD SCORE + REMAINING TIME TO SCORE SYSTEM
-            Debug.Log("Correct Order");
-
-        }
+            ScoreSystem.UpdatePoints(scorePoints);
         else
-        {
-            //DEDUCT SCORE TO SCORE SYSTEM
-            Debug.Log("Wrong Order");
-        }
+            ScoreSystem.UpdatePoints(-scorePoints);
     }
 
     public static void StartOrdering()
     {
         var inGame = GameManager.StillInGame();
         if (!inGame) return;
-        _randomIndex = Random.Range(0, _levelRecipeList.Count);
+        // _randomIndex = Random.Range(0, _levelRecipeList.Count);
         //debug to check if wrong order or not
-        // _randomIndex = 0;
+        _randomIndex = 0;
         var instance = DataManager.GetSpawnData<TimerBehaviour>(SpawnType.TimerBehaviour);
         _currentTimer = Object.Instantiate(instance);
         var intervalTime = _levelRecipeList[_randomIndex].IntervalOrderDuration;

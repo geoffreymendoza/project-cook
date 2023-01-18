@@ -9,6 +9,7 @@ public class RecipeBags : ScriptableObject
     public Sprite Sprite;
     public float IntervalOrderDuration;
     public float WaitingOrderDuration;
+    public int ScorePoints;
     public IngredientsInfo[] IngredientsData;
 }
 

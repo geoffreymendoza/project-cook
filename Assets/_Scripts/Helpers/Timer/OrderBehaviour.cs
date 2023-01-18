@@ -12,6 +12,7 @@ public class OrderBehaviour : MonoBehaviour
     private Timer _timer;
     private ItemType _orderType;
     public ItemType GetOrderType() => _orderType;
+    public int ScorePoints { private set; get; }
     private bool _interrupt = false;
     private bool _init = false;
     public void Initialize(RecipeBags recipe)
@@ -19,6 +20,7 @@ public class OrderBehaviour : MonoBehaviour
         if (_init) return;
         var duration = recipe.WaitingOrderDuration;
         _orderType = recipe.Type;
+        ScorePoints = recipe.ScorePoints;
         _timer = new Timer(duration);
         _timer.OnTimerDone += OnDestroyObject;
         _sliderBarUI.Initialize(duration);

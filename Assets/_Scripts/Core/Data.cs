@@ -41,5 +41,4 @@ public enum SpawnType
 {
     None,
     TimerBehaviour,
-    
 }

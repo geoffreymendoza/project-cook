@@ -51,5 +51,6 @@ public enum UIType
     TwoIngredientOrder,
     ThreeIngredientOrder,
     OrdersGrid,
+    ScoreUI,
     
 }
