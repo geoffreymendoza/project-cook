@@ -8,6 +8,7 @@ public class PlayableEntity : Entity, IPickupHandler
     [Header("Detect Radius")] 
     [SerializeField] private float _detectRadius = 0.5f;
     [SerializeField] private Transform _itemPlacement;
+    private InputController _inputController;
 
     public bool HasItem => ItemObj != null;
     public ItemObject ItemObj { get; private set; }
@@ -19,20 +20,35 @@ public class PlayableEntity : Entity, IPickupHandler
     private InteractObject _highlightedObject;
     private InteractBags _currentHighlightData;
 
+    //TODO REMOVE
+    [Header("Debug")] [SerializeField] private bool _isDebugging = false;
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        _inputController = GetComponent<InputController>();
         Initialize();
-        InputController.OnInput += OnInput;
+        _inputController.OnInput += OnInput;
+        CanMove = false;
+        GameManager.OnPaused += OnPaused;
+        if (_isDebugging)
+        {
+            CanMove = true;
+        }
+        CharacterManager.Instance.JoinCharacter(this);
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    private void OnApplicationQuit()
+    private void OnDestroy()
     {
-        InputController.OnInput -= OnInput;
+        _inputController.OnInput -= OnInput;
+        GameManager.OnPaused -= OnPaused;
     }
 
     private void Update()
     {
+        if (!_init) return;
         CheckHighlightObject();
     }
 
@@ -51,8 +67,16 @@ public class PlayableEntity : Entity, IPickupHandler
         _highlightedObject.HighlightObject(_currentHighlightData.MaterialEmissive);
     }
 
+    private void OnPaused(bool value)
+    {
+        value = !value;
+        CanMove = value;
+        _rb.velocity = Vector3.zero;
+    }
+
     private void OnInput(FrameInput input)
     {
+        if (!_init) return;
         InteractInterrupted(input);
         InteractItem(input.Interact);
         GrabItem(input.Grab);

@@ -188,7 +188,7 @@ public class Sink : Interactable
         StacksCount = 0;
         Type = InteractableType.Sink;
         CanTriggerInteractInput = true;
-        EventCore.OnWashComplete += UpdateStackCount;
+        Core.OnWashComplete += UpdateStackCount;
     }
 
     private void UpdateStackCount(ItemType type)

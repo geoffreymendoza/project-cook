@@ -21,7 +21,7 @@ public class InteractObject : MonoBehaviour
         _renderer = this.GetComponent<Renderer>();
     }
 
-    private void OnApplicationQuit()
+    private void OnDestroy()
     {
         switch (_type)
         {
@@ -35,10 +35,10 @@ public class InteractObject : MonoBehaviour
                 OnSpawnDirtyPlate -= _interactable.SpawnItem;
                 break;
             case InteractableType.CleanPlateTable:
-                EventCore.OnWashComplete -= _interactable.SpawnItem;
+                Core.OnWashComplete -= _interactable.SpawnItem;
                 break;
             case InteractableType.Sink:
-                EventCore.OnWashComplete -= OnWashComplete;
+                Core.OnWashComplete -= OnWashComplete;
                 break;
         }
     }
@@ -93,10 +93,10 @@ public class InteractObject : MonoBehaviour
                 OnSpawnDirtyPlate += _interactable.SpawnItem;
                 break;
             case InteractableType.CleanPlateTable:
-                EventCore.OnWashComplete += _interactable.SpawnItem;
+                Core.OnWashComplete += _interactable.SpawnItem;
                 break;
             case InteractableType.Sink:
-                EventCore.OnWashComplete += OnWashComplete;
+                Core.OnWashComplete += OnWashComplete;
                 break;
         }
     }

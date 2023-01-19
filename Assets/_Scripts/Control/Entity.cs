@@ -20,6 +20,8 @@ public abstract class Entity : MonoBehaviour
     protected float _dashTime = 0.2f;
     [SerializeField] protected float _dashCooldown = 1f;
     
+    public bool CanMove { protected set; get; } = false;
+
     private WaitForSeconds _waitForDashTime;
     private WaitForSeconds _waitForDashCooldown;
 
@@ -31,11 +33,14 @@ public abstract class Entity : MonoBehaviour
         _data = new InitEntityData(this, _type, _rb,_anim);
     }
 
+    protected bool _init = false;
     protected virtual void Initialize()
     {
+        if (_init) return;
         _waitForDashTime = new WaitForSeconds(_dashTime);
         _waitForDashCooldown = new WaitForSeconds(_dashCooldown);
         OnInitializeEntity?.Invoke(_data);
+        _init = true;
     }
 
     public virtual void MoveEntity(Vector3 direction)

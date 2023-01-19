@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13497fa873beb564fbabc872f3883437, type: 3}
-  m_Name: Level01_Sashimi
+  m_Script: {fileID: 11500000, guid: ac515f2b02234950b166e2c5b36c3250, type: 3}
+  m_Name: Entity_Player
   m_EditorClassIdentifier: 
-  Type: 1
-  LevelPrefab: {fileID: 1697480390136464183, guid: c6cb041c23f13d4489fbd1f87a8f22ef, type: 3}
-  LevelDuration: 10
-  Orders:
-  - RecipeType: 405
-  - RecipeType: 404
+  Type: 2
+  Prefab: {fileID: 2705621143470257862, guid: 6085182a109b9454bbc1bd5fc378e085, type: 3}

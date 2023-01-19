@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class EventCore
+public static partial class Core
 {
     public static event Action<ItemType> OnWashComplete;
 
@@ -18,4 +18,6 @@ public static class EventCore
     {
         OnInitializeScene?.Invoke(id);
     }
+    
+    
 }

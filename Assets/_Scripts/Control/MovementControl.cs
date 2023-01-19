@@ -11,20 +11,18 @@ public class MovementControl : MonoBehaviour
     private float _moveSpeed;
     private Vector3 _direction;
     private Vector3 _prevDirection;
+    
+    private InputController _inputController;
 
     private void Awake()
     {
+        _inputController = GetComponent<InputController>();
         Entity.OnInitializeEntity += OnInitializeEntity;
-    }
-
-    private void OnApplicationQuit()
-    {
-        InputController.OnInput -= OnInput;
     }
 
     private void OnDestroy()
     {
-        InputController.OnInput -= OnInput;
+        _inputController.OnInput -= OnInput;
     }
 
     private void OnInitializeEntity(InitEntityData data)
@@ -34,13 +32,14 @@ public class MovementControl : MonoBehaviour
         _entityType = data.Type;
         if (_entityType == EntityType.PlayableCharacter)
         {
-            InputController.OnInput += OnInput;
+            _inputController.OnInput += OnInput;
         }
     }
 
     private void OnInput(FrameInput input)
     {
         _direction = new Vector3(input.Horizontal, 0, input.Vertical);
+        if(!_entity.CanMove) return;
         if (_direction != Vector3.zero)
             _prevDirection = _direction;
 

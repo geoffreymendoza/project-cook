@@ -55,5 +55,6 @@ public enum UIType
     DelayStart,
     DelayEnd,
     Results,
-    LevelSelection
+    LevelSelection,
+    Lobby
 }

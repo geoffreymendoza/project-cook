@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public static class GameManager
 {
     public static event Action<bool> OnPaused;
-    
+    public static event Action OnLevelCompleted; 
+
     private static bool _inGame = false;
     private static GameTimeBehaviour _currentGameTime;
 
@@ -36,6 +37,7 @@ public static class GameManager
 
     private static void SetupGameScene()
     {
+        CharacterManager.Instance.SpawnToGameScene();
         LevelManager.SpawnLevelToScene();
         var data = DataManager.GetLevelData(LevelManager.GetCurrentLevel());
         List<RecipeBags> recipeList = data.Orders.Select(rd => 
@@ -69,6 +71,7 @@ public static class GameManager
     public static void ShowResults()
     {
         SceneManager.LoadScene(Data.RESULTS_SCENE);
+        OnLevelCompleted?.Invoke();
     }
 
     public static void InvokePause()
