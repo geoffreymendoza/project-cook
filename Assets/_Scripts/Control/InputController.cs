@@ -11,7 +11,7 @@ public class InputController : MonoBehaviour
     private InputAction _dashAction;
     private InputAction _grabAction;
     private InputAction _interactAction;
-    public static event Action<FrameInput> OnInput;
+    public event Action<FrameInput> OnInput;
     private FrameInput _input;
 
     private void Awake()

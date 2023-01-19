@@ -11,20 +11,18 @@ public class MovementControl : MonoBehaviour
     private float _moveSpeed;
     private Vector3 _direction;
     private Vector3 _prevDirection;
+    
+    private InputController _inputController;
 
     private void Awake()
     {
+        _inputController = GetComponent<InputController>();
         Entity.OnInitializeEntity += OnInitializeEntity;
-    }
-
-    private void OnApplicationQuit()
-    {
-        InputController.OnInput -= OnInput;
     }
 
     private void OnDestroy()
     {
-        InputController.OnInput -= OnInput;
+        _inputController.OnInput -= OnInput;
     }
 
     private void OnInitializeEntity(InitEntityData data)
@@ -34,7 +32,7 @@ public class MovementControl : MonoBehaviour
         _entityType = data.Type;
         if (_entityType == EntityType.PlayableCharacter)
         {
-            InputController.OnInput += OnInput;
+            _inputController.OnInput += OnInput;
         }
     }
 

@@ -13,6 +13,12 @@ public class LevelStub : MonoBehaviour
 
     private void Start()
     {
+        if (CharacterManager.Instance == null)
+        {
+            var data = DataManager.GetSpawnData(SpawnType.CharacterManager);
+            Instantiate(data.Prefab);
+        }
+        
         if (_isDebugging)
         {
             LevelManager.LevelToLoad(_levelToDebug);

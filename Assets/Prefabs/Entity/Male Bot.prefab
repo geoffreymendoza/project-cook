@@ -1000,6 +1000,7 @@ MonoBehaviour:
   _dashCooldown: 0.1
   _detectRadius: 0.3
   _itemPlacement: {fileID: 6372131742211884470}
+  _isDebugging: 0
 --- !u!114 &2705621143470257722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1075,7 +1076,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
