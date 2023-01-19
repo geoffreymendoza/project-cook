@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class GameManager
@@ -63,9 +64,32 @@ public static class GameManager
     public static void FinishedLevel()
     {
         InvokePause();
+        CompareHighScore();
+        
         var mainCanvas = UIManager.GetMainCanvas();
         var delayUI = UIManager.GetUIObject<DelayEndBehaviour>(UIType.DelayEnd);
         delayUI.transform.SetParent(mainCanvas.transform,false);
+    }
+
+    private static void CompareHighScore()
+    {
+        //Save
+        LevelType currentLevel = LevelManager.GetCurrentLevel();
+        Debug.Log((int)currentLevel);
+        int currentScore = ScoreSystem.GetCurrentScore();
+        //load existing
+        var previousSave = SaveAndLoadSystem.LoadGame();
+        foreach (var lvl in previousSave.Levels)
+        {
+            if (currentLevel != lvl.Type || currentScore <= lvl.HighScore) continue;
+            Debug.Log("new high score");
+            LevelData levelData = new LevelData(currentLevel, currentScore);
+            SaveAndLoadSystem.SaveGame(levelData);
+            break;
+        }
+        //unlock next level
+        LevelData nextLevelUnlocked = new LevelData(currentLevel + 1, true);
+        SaveAndLoadSystem.SaveGame(nextLevelUnlocked);
     }
 
     public static void ShowResults()

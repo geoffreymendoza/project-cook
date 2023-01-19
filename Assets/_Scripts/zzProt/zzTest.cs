@@ -46,4 +46,11 @@ public class zzTest : MonoBehaviour
         LevelManager.LevelToLoad(_level);
         SceneManager.LoadScene(Data.GAME_SCENE);
     }
+
+    [ContextMenu("Test Save")]
+    public void TestSave()
+    {
+        LevelData levelData = new LevelData(LevelType.Sashimi, true);
+        SaveAndLoadSystem.SaveGame(levelData);
+    }
 }

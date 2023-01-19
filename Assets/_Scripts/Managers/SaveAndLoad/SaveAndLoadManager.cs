@@ -7,7 +7,7 @@ public class SaveAndLoadManager : MonoBehaviour
    public void SaveGame()
     {
         
-        SaveAndLoadSystem.SaveGame();
+        //SaveAndLoadSystem.SaveGame();
     }
 
     public void LoadGame()
