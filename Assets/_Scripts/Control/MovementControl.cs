@@ -41,6 +41,7 @@ public class MovementControl : MonoBehaviour
     private void OnInput(FrameInput input)
     {
         _direction = new Vector3(input.Horizontal, 0, input.Vertical);
+        if(!_entity.CanMove) return;
         if (_direction != Vector3.zero)
             _prevDirection = _direction;
 

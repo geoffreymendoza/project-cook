@@ -24,11 +24,14 @@ public class PlayableEntity : Entity, IPickupHandler
     {
         Initialize();
         InputController.OnInput += OnInput;
+        CanMove = false;
+        GameManager.OnPaused += OnPaused;
     }
 
     private void OnApplicationQuit()
     {
         InputController.OnInput -= OnInput;
+        GameManager.OnPaused -= OnPaused;
     }
 
     private void Update()
@@ -49,6 +52,12 @@ public class PlayableEntity : Entity, IPickupHandler
         _highlightedObject = interObj;
         _currentHighlightData = _highlightedObject.Data;
         _highlightedObject.HighlightObject(_currentHighlightData.MaterialEmissive);
+    }
+
+    private void OnPaused(bool value)
+    {
+        value = !value;
+        CanMove = value;
     }
 
     private void OnInput(FrameInput input)

@@ -43,4 +43,5 @@ public enum SpawnType
 {
     None,
     TimerBehaviour,
+    PlayerEntity,
 }

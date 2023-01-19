@@ -739,7 +739,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1043129179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,7 +842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3969ecaf8ccf4cd2a4d47215f85031bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isDebugging: 0
+  _isDebugging: 1
   _levelToDebug: 1
   _sceneID: 2
 --- !u!4 &1954167371

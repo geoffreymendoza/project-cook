@@ -20,6 +20,8 @@ public abstract class Entity : MonoBehaviour
     protected float _dashTime = 0.2f;
     [SerializeField] protected float _dashCooldown = 1f;
     
+    public bool CanMove { protected set; get; } = false;
+
     private WaitForSeconds _waitForDashTime;
     private WaitForSeconds _waitForDashCooldown;
 
