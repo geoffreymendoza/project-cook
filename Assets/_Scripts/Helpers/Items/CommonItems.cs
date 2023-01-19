@@ -80,7 +80,7 @@ public class Item
             if (CurrentWorldSpaceTimerBehaviour != null) return true;
             Action onDone = () =>
             {
-                EventCore.InvokeOnWashComplete(ItemType.Plate);
+                Core.InvokeOnWashComplete(ItemType.Plate);
                 //OnWashComplete?.Invoke(ItemType.Plate);
                 Debug.Log($"{Type} washed");
             };

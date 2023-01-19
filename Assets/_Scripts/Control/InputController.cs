@@ -14,13 +14,18 @@ public class InputController : MonoBehaviour
     public static event Action<FrameInput> OnInput;
     private FrameInput _input;
 
-    private void Start()
+    private void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
         _moveAction = _playerInput.actions[Data.INPUT_MOVE];
         _dashAction = _playerInput.actions[Data.INPUT_DASH];
         _grabAction = _playerInput.actions[Data.INPUT_GRAB];
         _interactAction = _playerInput.actions[Data.INPUT_INTERACT];
+    }
+
+    private void Start()
+    {
+
     }
 
     // Update is called once per frame

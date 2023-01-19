@@ -33,11 +33,14 @@ public abstract class Entity : MonoBehaviour
         _data = new InitEntityData(this, _type, _rb,_anim);
     }
 
+    protected bool _init = false;
     protected virtual void Initialize()
     {
+        if (_init) return;
         _waitForDashTime = new WaitForSeconds(_dashTime);
         _waitForDashCooldown = new WaitForSeconds(_dashCooldown);
         OnInitializeEntity?.Invoke(_data);
+        _init = true;
     }
 
     public virtual void MoveEntity(Vector3 direction)

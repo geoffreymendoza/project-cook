@@ -28,7 +28,7 @@ public class PlayableEntity : Entity, IPickupHandler
         GameManager.OnPaused += OnPaused;
     }
 
-    private void OnApplicationQuit()
+    private void OnDestroy()
     {
         InputController.OnInput -= OnInput;
         GameManager.OnPaused -= OnPaused;
@@ -36,6 +36,7 @@ public class PlayableEntity : Entity, IPickupHandler
 
     private void Update()
     {
+        if (!_init) return;
         CheckHighlightObject();
     }
 
@@ -62,6 +63,7 @@ public class PlayableEntity : Entity, IPickupHandler
 
     private void OnInput(FrameInput input)
     {
+        if (!_init) return;
         InteractInterrupted(input);
         InteractItem(input.Interact);
         GrabItem(input.Grab);

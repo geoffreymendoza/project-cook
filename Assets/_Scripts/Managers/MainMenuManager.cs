@@ -73,6 +73,7 @@ public class MainMenuManager : MonoBehaviour
     }
 
     //TODO attach button once can touch the main menu scene -dyep
+    [SerializeField]
     private Button _startButton;
     private void Start()
     {
@@ -85,7 +86,7 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene(Data.LEVEL_SELECTION_SCENE);
     }
 
-    private void OnApplicationQuit()
+    private void OnDestroy()
     {
         _startButton.onClick.RemoveAllListeners();
     }

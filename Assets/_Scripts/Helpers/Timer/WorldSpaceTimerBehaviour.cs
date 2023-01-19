@@ -13,6 +13,8 @@ public class WorldSpaceTimerBehaviour : MonoBehaviour
     private WorldSpaceSliderUI _currentTimeUI;
     public WorldSpaceSliderUI GetCurrentTimeUI() => _currentTimeUI;
     private bool _interrupted = false;
+
+    private Action _onTimerDoneAction;
     
     private bool _init = false;
     public void Initialize(float duration, bool showUI, Transform parent, Action onTimerDoneAction = null)
@@ -20,7 +22,8 @@ public class WorldSpaceTimerBehaviour : MonoBehaviour
         if(_init) return;
         _showUI = showUI;
         _timer = new Timer(duration);
-        _timer.OnTimerDone += onTimerDoneAction;
+        _onTimerDoneAction = onTimerDoneAction;
+        _timer.OnTimerDone += _onTimerDoneAction;
         _timer.OnTimerDone += OnTimerDone;
         if (_showUI)
         {
@@ -38,6 +41,7 @@ public class WorldSpaceTimerBehaviour : MonoBehaviour
     private void OnTimerDone()
     {
         _timer.OnTimerDone -= OnTimerDone;
+        _timer.OnTimerDone -= _onTimerDoneAction;
         //TODO return to the timer manager class
         Destroy(this.gameObject);
     }
