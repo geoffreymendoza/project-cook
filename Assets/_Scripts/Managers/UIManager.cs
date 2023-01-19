@@ -46,11 +46,14 @@ public enum UIType
     None,
     WorldSpaceTimeDuration,
     MainCanvas,
-    GameTimeUI,
+    GameTime,
     OneIngredientOrder,
     TwoIngredientOrder,
     ThreeIngredientOrder,
     OrdersGrid,
-    ScoreUI,
-    
+    Score,
+    DelayStart,
+    DelayEnd,
+    Results,
+    LevelSelection
 }

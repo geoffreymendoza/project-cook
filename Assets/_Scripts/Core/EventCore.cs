@@ -11,4 +11,11 @@ public static class EventCore
     {
         OnWashComplete?.Invoke(type);
     }
+
+    public static event Action<SceneID> OnInitializeScene;
+
+    public static void InvokeOnInitializeScene(SceneID id)
+    {
+        OnInitializeScene?.Invoke(id);
+    }
 }

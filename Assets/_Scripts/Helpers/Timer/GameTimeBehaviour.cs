@@ -30,11 +30,13 @@ public class GameTimeBehaviour : MonoBehaviour
     {
         //PAUSE ALL ACTIONS AND END GAME
         //CALL GAME MANAGER TO END LEVEL, SAVE SCORE AND GO TO RESULTS SCREEN
+        GameManager.FinishedLevel();
         Debug.Log("FINISHED LEVEL");
     }
 
     private void Update()
     {
+        if (!_init) return;
         _timer.Tick(Time.deltaTime);
     }
 }

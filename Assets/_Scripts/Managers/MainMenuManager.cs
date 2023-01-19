@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
@@ -70,7 +72,22 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    //TODO attach button once can touch the main menu scene -dyep
+    private Button _startButton;
+    private void Start()
+    {
+        _startButton = GameObject.Find("Start Button").GetComponent<Button>();
+        _startButton.onClick.AddListener(GoToLevelSelection);
+    }
 
+    private void GoToLevelSelection()
+    {
+        SceneManager.LoadScene(Data.LEVEL_SELECTION_SCENE);
+    }
 
+    private void OnApplicationQuit()
+    {
+        _startButton.onClick.RemoveAllListeners();
+    }
 }
 

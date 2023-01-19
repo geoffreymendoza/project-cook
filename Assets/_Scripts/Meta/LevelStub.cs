@@ -9,15 +9,17 @@ public class LevelStub : MonoBehaviour
     [Header("Current Scene")]
     [SerializeField] private SceneID _sceneID;
 
+    private Action OnSomething;
+
     private void Start()
     {
         if (_isDebugging)
         {
             LevelManager.LevelToLoad(_levelToDebug);
-            GameManager.StartGame(SceneID.Game);
+            GameManager.InitializeScene(SceneID.Game);
             return;
         }
         
-        GameManager.StartGame(_sceneID);
+        GameManager.InitializeScene(_sceneID);
     }
 }

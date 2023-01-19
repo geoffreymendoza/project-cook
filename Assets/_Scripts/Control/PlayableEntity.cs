@@ -15,7 +15,7 @@ public class PlayableEntity : Entity, IPickupHandler
     private WorldSpaceTimerBehaviour _worldSpaceTimer;
     private bool _isInteracting = false;
     
-    //TODO temporary
+    //TODO remove temporary
     private InteractObject _highlightedObject;
     private InteractBags _currentHighlightData;
 

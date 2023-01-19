@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public abstract class Entity : MonoBehaviour
 {
     public static event Action<InitEntityData> OnInitializeEntity; 
@@ -22,21 +23,21 @@ public abstract class Entity : MonoBehaviour
     private WaitForSeconds _waitForDashTime;
     private WaitForSeconds _waitForDashCooldown;
 
+    private InitEntityData _data;
+
+    private void Awake()
+    {
+        _rb = this.GetComponent<Rigidbody>();
+        _data = new InitEntityData(this, _type, _rb,_anim);
+    }
 
     protected virtual void Initialize()
     {
         _waitForDashTime = new WaitForSeconds(_dashTime);
         _waitForDashCooldown = new WaitForSeconds(_dashCooldown);
-        var data = new InitEntityData(this, _type, _rb,_anim);
-        OnInitializeEntity?.Invoke(data);
+        OnInitializeEntity?.Invoke(_data);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    
     public virtual void MoveEntity(Vector3 direction)
     {
         if (_isDashing) return;
@@ -58,7 +59,6 @@ public abstract class Entity : MonoBehaviour
 
     private IEnumerator Dash(Vector3 direction)
     {
-        // yield return;
         _canDash = false;
         _isDashing = true;
         _rb.velocity = direction * _dashPower;

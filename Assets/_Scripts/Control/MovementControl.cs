@@ -19,8 +19,12 @@ public class MovementControl : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        if (_entityType == EntityType.PlayableCharacter)
-            InputController.OnInput -= OnInput;
+        InputController.OnInput -= OnInput;
+    }
+
+    private void OnDestroy()
+    {
+        InputController.OnInput -= OnInput;
     }
 
     private void OnInitializeEntity(InitEntityData data)
