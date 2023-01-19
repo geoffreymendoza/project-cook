@@ -39,6 +39,8 @@ public static class SaveAndLoadSystem
         else
         {
             //Debug.LogError(message:"save file does not exist!");
+            LevelData firstLevelData = new LevelData(LevelType.Sashimi, true);
+            tempData.Levels[0] = firstLevelData;
             SaveGame(tempData);
         }
 
