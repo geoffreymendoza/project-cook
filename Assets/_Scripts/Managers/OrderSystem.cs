@@ -65,9 +65,9 @@ public static class OrderSystem
     {
         var inGame = GameManager.StillInGame();
         if (!inGame) return;
-        // _randomIndex = Random.Range(0, _levelRecipeList.Count);
+        _randomIndex = Random.Range(0, _levelRecipeList.Count);
         //debug to check if wrong order or not
-        _randomIndex = 0;
+        // _randomIndex = 0;
         var instance = DataManager.GetSpawnData<TimerBehaviour>(SpawnType.TimerBehaviour);
         _currentTimer = Object.Instantiate(instance);
         var intervalTime = _levelRecipeList[_randomIndex].IntervalOrderDuration;

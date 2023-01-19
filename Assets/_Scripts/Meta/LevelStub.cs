@@ -22,10 +22,18 @@ public class LevelStub : MonoBehaviour
         if (_isDebugging)
         {
             LevelManager.LevelToLoad(_levelToDebug);
+            var data = DataManager.GetSpawnData(SpawnType.PlayerInputManager);
+            Instantiate(data.Prefab);
             GameManager.InitializeScene(SceneID.Game);
             return;
         }
         
         GameManager.InitializeScene(_sceneID);
+    }
+
+    [ContextMenu("SpawnPlayerToScene")]
+    public void SpawnPlayerToScene()
+    {
+        CharacterManager.Instance.SpawnToGameScene();
     }
 }
