@@ -11,36 +11,62 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Animator animUI;
     [SerializeField] private CanvasGroup UI;
     [SerializeField] private CanvasGroup MainUI;
+    [SerializeField] private CanvasGroup LevelUI;
     [SerializeField] private GameObject MainMenuDefaultButton;
     [SerializeField] private GameObject CustomizeBackButton;
-    bool fadeIn = false;
-    bool fadeOut = false;
+    [SerializeField] private GameObject LevelBackButton;
+    bool CustomFadeIn = false;
+    bool CustomFadeOut = false;
+    bool LevelFadeIn = false;
+    bool LevelFadeOut = false;
     GameObject myEventSystem;
 
     void OnEnable()
     {
         UI.alpha = 0;
         UI.blocksRaycasts = false;
+        LevelUI.alpha = 0;
+        LevelUI.blocksRaycasts = false;
     }
-   public void SettingsButton()
+
+    public void ExitButton()
+    {
+
+    }
+    public void StartButton() 
+    {
+        MainUI.blocksRaycasts = false;
+        animCamera.SetBool("Level", true);
+        animUI.SetBool("Customize", true);
+        LevelFadeIn = true;
+    }
+
+    public void MainMenuLevelButton()
+    {
+        LevelUI.blocksRaycasts = false;
+        animCamera.SetBool("Level", false);
+        animUI.SetBool("Customize", false);
+        LevelFadeOut = true;
+    }
+        public void SettingsButton()
     {
         MainUI.blocksRaycasts = false;
         animCamera.SetBool("Customize",true);
         animUI.SetBool("Customize", true);
-        fadeIn = true;
+        CustomFadeIn = true;
     }
     
-    public void MainMenuButton()
+    public void MainMenuCustomizeButton()
     {
         UI.blocksRaycasts = false;
         animCamera.SetBool("Customize", false);
         animUI.SetBool("Customize", false);
-        fadeOut = true;
+        CustomFadeOut = true;
     }
     // Update is called once per frame
     void Update()
     {
-        if (fadeIn)
+        if (CustomFadeIn)
         {
             if (UI.alpha < 1)
             {
@@ -50,12 +76,12 @@ public class MainMenuManager : MonoBehaviour
                     myEventSystem = GameObject.Find("EventSystem");
                     myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(CustomizeBackButton);
                     UI.blocksRaycasts = true;
-                    fadeIn = false;
+                    CustomFadeIn = false;
                 }
             }
         }
 
-        if (fadeOut)
+        if (CustomFadeOut)
         {
             
             if (UI.alpha >= 0)
@@ -66,7 +92,38 @@ public class MainMenuManager : MonoBehaviour
                     myEventSystem = GameObject.Find("EventSystem");
                     myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(MainMenuDefaultButton);
                     MainUI.blocksRaycasts = true;
-                    fadeOut = false;
+                    CustomFadeOut = false;
+                }
+            }
+        }
+
+        if (LevelFadeIn)
+        {
+            if (LevelUI.alpha < 1)
+            {
+                LevelUI.alpha += Time.deltaTime;
+                if (LevelUI.alpha >= 1)
+                {
+                    myEventSystem = GameObject.Find("EventSystem");
+                    myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(CustomizeBackButton);
+                    LevelUI.blocksRaycasts = true;
+                    LevelFadeIn = false;
+                }
+            }
+        }
+
+        if (LevelFadeOut)
+        {
+
+            if (LevelUI.alpha >= 0)
+            {
+                LevelUI.alpha -= Time.deltaTime;
+                if (LevelUI.alpha == 0)
+                {
+                    myEventSystem = GameObject.Find("EventSystem");
+                    myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(MainMenuDefaultButton);
+                    MainUI.blocksRaycasts = true;
+                    LevelFadeOut = false;
                 }
             }
         }
@@ -77,8 +134,9 @@ public class MainMenuManager : MonoBehaviour
     private Button _startButton;
     private void Start()
     {
-        _startButton = GameObject.Find("Start Button").GetComponent<Button>();
-        _startButton.onClick.AddListener(GoToLevelSelection);
+        
+        //_startButton = GameObject.Find("Start Button").GetComponent<Button>();
+       // _startButton.onClick.AddListener(GoToLevelSelection);
     }
 
     private void GoToLevelSelection()
