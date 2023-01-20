@@ -101,11 +101,11 @@ public class MainMenuManager : MonoBehaviour
         {
             if (LevelUI.alpha < 1)
             {
-                LevelUI.alpha += Time.deltaTime;
+                LevelUI.alpha += Time.deltaTime * 0.7f;
                 if (LevelUI.alpha >= 1)
                 {
                     myEventSystem = GameObject.Find("EventSystem");
-                    myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(CustomizeBackButton);
+                    myEventSystem.GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(LevelBackButton);
                     LevelUI.blocksRaycasts = true;
                     LevelFadeIn = false;
                 }
