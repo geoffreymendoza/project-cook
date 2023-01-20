@@ -56,10 +56,14 @@ public abstract class Entity : MonoBehaviour
         
     }
 
-    public virtual void DashEntity(Vector3 direction)
+    public virtual bool DashEntity(Vector3 direction)
     {
-        if(_canDash)
+        if (_canDash)
+        {
             StartCoroutine(Dash(direction));
+            return true;
+        }
+        return false;
     }
 
     private IEnumerator Dash(Vector3 direction)
@@ -71,6 +75,11 @@ public abstract class Entity : MonoBehaviour
         _isDashing = false;
         yield return _waitForDashCooldown;
         _canDash = true;
+    }
+
+    public virtual void SpawnDashEffect()
+    {
+        
     }
 }
 

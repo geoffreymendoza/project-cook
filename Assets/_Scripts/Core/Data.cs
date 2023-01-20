@@ -6,6 +6,7 @@ public static class Data
 {
     //ANIMATIONS
     public const string ANIM_NAVIGATION_SPEED = "nav_speed";
+    public const string ANIM_POSE = "pose";
     
     //INPUT CONTEXT
     public const string INPUT_MOVE = "Move";

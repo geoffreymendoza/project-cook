@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public static class OrderSystem
 {
+    public static event Action<bool> OnOrderComplete;
+
     private static List<RecipeBags> _levelRecipeList = new List<RecipeBags>();
     private static List<OrderBehaviour> _currentOrdersList = new List<OrderBehaviour>();
     private static int _currentOrders;
@@ -59,6 +64,8 @@ public static class OrderSystem
             ScoreSystem.UpdatePoints(scorePoints);
         else
             ScoreSystem.UpdatePoints(-scorePoints);
+        
+        OnOrderComplete?.Invoke(correctOrder);
     }
 
     public static void StartOrdering()
