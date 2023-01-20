@@ -8,10 +8,8 @@ public class InteractBags : ScriptableObject
     [Header("Interact Data")] 
     public InteractableType Type;
     public InteractObject Prefab;
-    public Mesh Mesh;
     public Material Material;
     public Material MaterialEmissive;
-    public Vector3 ColliderSize;
     
     [Header("Item placed on table")]
     public ItemType InitialItem;

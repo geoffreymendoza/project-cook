@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: Sink
   m_EditorClassIdentifier: 
   Type: 7
-  Prefab: {fileID: 4344930919544127564, guid: 997da3d3fd028974da3195bd41dab413, type: 3}
-  Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  Prefab: {fileID: 2357458976874632719, guid: 9057717c50bf13446844ce76541fae45, type: 3}
   Material: {fileID: 2100000, guid: b56be331ee6f0b94e94f607abe9af617, type: 2}
   MaterialEmissive: {fileID: 2100000, guid: 87ace888e178aaa42a5c2e6b25ee5218, type: 2}
-  ColliderSize: {x: 0, y: 0, z: 0}
   InitialItem: -1
