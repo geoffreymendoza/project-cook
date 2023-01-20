@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 9
   Prefab: {fileID: 4344930919544127564, guid: 997da3d3fd028974da3195bd41dab413, type: 3}
-  Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   Material: {fileID: 2100000, guid: e477995126566af409c8fbd05ba5548a, type: 2}
   MaterialEmissive: {fileID: 2100000, guid: e4238cbc0dcd2c040bf1a8c18cd17c80, type: 2}
   ColliderSize: {x: 0, y: 0, z: 0}

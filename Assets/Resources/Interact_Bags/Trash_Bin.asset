@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Trash_Bin
   m_EditorClassIdentifier: 
   Type: 3
-  Prefab: {fileID: 4344930919544127564, guid: 997da3d3fd028974da3195bd41dab413, type: 3}
-  Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  Prefab: {fileID: 2357458976874632719, guid: 8380a6b751a7d6648bd4fa068cf68b5e, type: 3}
+  Mesh: {fileID: 0}
   Material: {fileID: 2100000, guid: 90d3ef624277c9840aa002344672c081, type: 2}
   MaterialEmissive: {fileID: 2100000, guid: f540e2e159a0c574d9e8c1e367924e9a, type: 2}
   ColliderSize: {x: 0, y: 0, z: 0}

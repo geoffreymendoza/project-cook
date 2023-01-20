@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour
     {
         _spawned = true;
         var interactBag = DataManager.GetInteractData(_interactableType, _initialItem);
-        var interactObj = Instantiate(interactBag.Prefab, this.transform.position, Quaternion.identity);
+        var interactObj = Instantiate(interactBag.Prefab, this.transform.position, this.transform.rotation);
         interactObj.Initialize(interactBag);
         this.gameObject.SetActive(false);
     }
@@ -43,7 +43,7 @@ public class Spawner : MonoBehaviour
     {
         _spawned = true;
         var spawnBag = DataManager.GetSpawnData(_spawnType);
-        var interactObj = Instantiate(spawnBag.Prefab, this.transform.position, Quaternion.identity);
+        var interactObj = Instantiate(spawnBag.Prefab, this.transform.position, this.transform.rotation);
         //TODO INITIALIZE INPUTS 
         this.gameObject.SetActive(false);
     }

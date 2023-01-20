@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InteractObject : MonoBehaviour
 {
@@ -12,13 +13,13 @@ public class InteractObject : MonoBehaviour
     
     public InteractBags Data { private set; get; }
     
-    private MeshFilter _meshFilter;
-    private Renderer _renderer;
+    [SerializeField] private Renderer[] _renderers;
 
     private void Awake()
     {
-        _meshFilter = this.GetComponent<MeshFilter>();
-        _renderer = this.GetComponent<Renderer>();
+        //TODO assign 1 by 1
+        // _meshFilter = this.GetComponent<MeshFilter>();
+        // _renderer = this.GetComponent<Renderer>();
     }
 
     private void OnDestroy()
@@ -45,7 +46,11 @@ public class InteractObject : MonoBehaviour
 
     public void HighlightObject(Material material)
     {
-        _renderer.material = material;
+        foreach (var r in _renderers)
+        {
+            r.material = material;
+        }
+        // _renderers.material = material;
     }
 
     private bool _init = false;
@@ -74,8 +79,13 @@ public class InteractObject : MonoBehaviour
         _interactable.Initialize(instanceItem, _itemPlacement);
         
         gameObject.name = data.name;
-        _meshFilter.sharedMesh = data.Mesh;
-        _renderer.material = data.Material;
+
+        foreach (var r in _renderers)
+        {
+            r.material = data.Material;
+        }
+        // _meshFilters.sharedMesh = data.Mesh;
+        // _renderers.material = data.Material;
 
         _type = data.Type;
         Data = data;
