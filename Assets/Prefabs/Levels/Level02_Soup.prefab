@@ -828,8 +828,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
-  _interactableType: 1
-  _initialItem: -1
+  _interactableType: 5
+  _initialItem: 601
   _cubeSize: {x: 1, y: 1, z: 1}
   _spawnType: 0
 --- !u!1 &5127908716542111437

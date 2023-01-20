@@ -16,7 +16,14 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: b84ebc97dbfcbb040b00af735437ba6a, type: 3}
   IntervalOrderDuration: 7
   WaitingOrderDuration: 20
+  ScorePoints: 10
   IngredientsData:
+  - IngredientType: 3
+    IngredientState: 3
+    IngredientSprite: {fileID: 21300000, guid: 56f72c96593fb6741bc13c1305ccd7ac, type: 3}
+  - IngredientType: 3
+    IngredientState: 3
+    IngredientSprite: {fileID: 21300000, guid: 56f72c96593fb6741bc13c1305ccd7ac, type: 3}
   - IngredientType: 3
     IngredientState: 3
     IngredientSprite: {fileID: 21300000, guid: 56f72c96593fb6741bc13c1305ccd7ac, type: 3}

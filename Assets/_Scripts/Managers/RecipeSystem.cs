@@ -100,21 +100,45 @@ public static class RecipeSystem
         if (recipeBag == null) return;
         if (plate.CurrentIngredients.Count != recipeBag.IngredientsData.Length) return;
         if (plate.Type is not ItemType.Plate) return;
-
+        
+        var currentIngredientTypes = plate.CurrentIngredients.Select(itm => 
+            new IngredientsInfo(itm.Type, itm.State)).Select(i => i.IngredientType).ToList();
+        
+        var currentIngredientStates = plate.CurrentIngredients.Select(itm => 
+            new IngredientsInfo(itm.Type, itm.State)).Select(i => i.IngredientState).ToList();
+        
+        //TODO refactor
+        bool exactRecipe = false;
         ItemType finalRecipeType = recipeBag.Type;
+        foreach (var recipe in _levelRecipeList)
+        {
+            //TODO check if all item states are equal also
+            var recipeItemTypes = recipe.IngredientsData.Select(x => x.IngredientType).ToList();
+            exactRecipe = currentIngredientTypes.IsEqual(recipeItemTypes);
+            var recipeItemStates = recipe.IngredientsData.Select(x => x.IngredientState).ToList();
+            exactRecipe = currentIngredientStates.IsEqual(recipeItemStates);
+            if (!exactRecipe) continue;
+            // finalRecipeType = recipe.Type;
+            break;
+        }
+        if (!exactRecipe) return;
+
+        // ItemType finalRecipeType = recipeBag.Type;
         var itemData = DataManager.GetItemData(finalRecipeType);
         var instanceItem = new Item(itemData);
         plate.ItemContainer.ChangeMesh(itemData);
         plate.CurrentIngredients.Clear();
         plate.AddIngredient(instanceItem);
         Debug.Log($"Recipe Created: {instanceItem.Type}!");
-        
     }
 
     private static bool CheckExactRecipe(Item plateItem, Item cookingContainer)
     {
-        var currentIngredientInfoList = cookingContainer.CurrentIngredients.Select(itm => 
+        var currentIngredientTypes = cookingContainer.CurrentIngredients.Select(itm => 
             new IngredientsInfo(itm.Type, itm.State)).Select(i => i.IngredientType).ToList();
+        
+        var currentIngredientStates = cookingContainer.CurrentIngredients.Select(itm => 
+            new IngredientsInfo(itm.Type, itm.State)).Select(i => i.IngredientState).ToList();
         
         var exactRecipe = false;
         ItemType finalRecipeType = ItemType.Unassigned;
@@ -122,7 +146,9 @@ public static class RecipeSystem
         {
             //TODO check if all item states are equal also
             var recipeItemTypes = recipe.IngredientsData.Select(x => x.IngredientType).ToList();
-            exactRecipe = currentIngredientInfoList.IsEqual(recipeItemTypes);
+            exactRecipe = currentIngredientTypes.IsEqual(recipeItemTypes);
+            var recipeItemStates = recipe.IngredientsData.Select(x => x.IngredientState).ToList();
+            exactRecipe = currentIngredientStates.IsEqual(recipeItemStates);
             if (!exactRecipe) continue;
             finalRecipeType = recipe.Type;
             break;
