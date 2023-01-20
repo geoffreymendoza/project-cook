@@ -44,8 +44,13 @@ public class MovementControl : MonoBehaviour
             _prevDirection = _direction;
 
         var dashDirection = GetDirection();
+        bool dashing = false;
         if (input.Dash)
-            _entity.DashEntity(dashDirection);
+            dashing = _entity.DashEntity(dashDirection);
+        if (dashing)
+        {
+            _entity.SpawnDashEffect();
+        }
 
         _entity.MoveEntity(_direction);
     }

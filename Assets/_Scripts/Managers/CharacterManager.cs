@@ -14,6 +14,7 @@ public class CharacterManager : PersistentSingleton<CharacterManager>
     private int _maxPlayers = 2;
 
     public int CurrentPlayersCount => _players.Count;
+    public Entity GetPlayer(int index) => _players[index];
     
     [SerializeField] private PlayerInputManager _playerInputManager;
     [SerializeField] private Transform[] _gameSpawnPoints;

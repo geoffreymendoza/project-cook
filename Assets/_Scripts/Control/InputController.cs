@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class InputController : MonoBehaviour
 {
@@ -23,11 +24,6 @@ public class InputController : MonoBehaviour
         _interactAction = _playerInput.actions[Data.INPUT_INTERACT];
     }
 
-    private void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -46,6 +42,11 @@ public class InputController : MonoBehaviour
             Dash = _dashAction.triggered
         };
         OnInput?.Invoke(_input);
+    }
+
+    public void AssignUIInputModule(InputSystemUIInputModule inputModule)
+    {
+        _playerInput.uiInputModule = inputModule;
     }
 }
 

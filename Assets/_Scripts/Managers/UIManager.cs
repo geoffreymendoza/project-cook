@@ -56,5 +56,6 @@ public enum UIType
     DelayEnd,
     Results,
     LevelSelection,
-    Lobby
+    Lobby,
+    Popup
 }

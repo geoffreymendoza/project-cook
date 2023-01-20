@@ -20,9 +20,15 @@ public class PlayableEntity : Entity, IPickupHandler
     private InteractObject _highlightedObject;
     private InteractBags _currentHighlightData;
 
+    [SerializeField] private GameObject[] _characterModels;
+    [SerializeField] private GameObject _currentModel;
+    private int _currentIndex = 0;
+
+    [SerializeField] private Transform _dashParent;
+    [SerializeField] private GameObject _dashEffect;
+
     //TODO REMOVE
     [Header("Debug")] [SerializeField] private bool _isDebugging = false;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -158,6 +164,25 @@ public class PlayableEntity : Entity, IPickupHandler
         _isInteracting = true;
         _worldSpaceTimer = item.CurrentWorldSpaceTimerBehaviour;
         _worldSpaceTimer.Interrupted(false);
+    }
+
+    public void AssignModel(int index)
+    {
+        _currentIndex += index;
+        if (_currentIndex >= _characterModels.Length)
+            _currentIndex = 0;
+        else if (_currentIndex <= -1)
+            _currentIndex = _characterModels.Length - 1;
+        var newModel = _characterModels[_currentIndex];
+        _currentModel.SetActive(false);
+        _currentModel = newModel;
+        _currentModel.SetActive(true);
+    }
+
+    public override void SpawnDashEffect()
+    {
+        var dashObj = Instantiate(_dashEffect, _dashParent.transform.position, _dashParent.rotation);
+        dashObj.transform.SetParent(null);
     }
 
     private void OnDrawGizmos()

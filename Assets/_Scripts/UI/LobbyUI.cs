@@ -21,13 +21,13 @@ public class LobbyUI : MonoBehaviour
 
     private void OnEnable()
     {
-        _startGameButton.onClick.AddListener(OnStartGame);
+        // _startGameButton.onClick.AddListener(OnStartGame);
         CharacterManager.OnCharacterJoined += OnCharacterJoined;
     }
 
     private void OnDisable()
     {
-        _startGameButton.onClick.RemoveListener(OnStartGame);
+        // _startGameButton.onClick.RemoveListener(OnStartGame);
         CharacterManager.OnCharacterJoined -= OnCharacterJoined;
     }
 
@@ -41,7 +41,11 @@ public class LobbyUI : MonoBehaviour
     {
         if (CharacterManager.Instance.CurrentPlayersCount <= 0)
         {
-            Debug.LogError("Must Press Join");
+            // Debug.LogError("Must Press Join");
+            var mainCanvas = UIManager.GetMainCanvas();
+            var popup = UIManager.GetUIObject<PopupUI>(UIType.Popup);
+            popup.transform.SetParent(mainCanvas.transform,false);
+            popup.ShowMessage("Must Press Join...");
             return;
         }
         SceneManager.LoadScene(Data.GAME_SCENE);
