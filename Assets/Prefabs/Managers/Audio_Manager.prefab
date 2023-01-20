@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5240957528921699704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5240957528921699706}
+  - component: {fileID: 5240957528921699707}
+  m_Layer: 0
+  m_Name: Audio_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5240957528921699706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5240957528921699704}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5240957528921699707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5240957528921699704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75cb67ae2585f2a49b66e9a25db1deaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - Name: Main Menu
+    Type: 1
+    clip: {fileID: 8300000, guid: 56bbbc0a2230ed24281873d096c08850, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 1
+    Source: {fileID: 0}
+  - Name: In Game
+    Type: 2
+    clip: {fileID: 8300000, guid: 3355fe7dc9fa0fc41aa6f9cc74b032f9, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 1
+    Source: {fileID: 0}
+  - Name: Result
+    Type: 3
+    clip: {fileID: 8300000, guid: eb030bc1cc9fe794aa334a59e3364c6f, type: 3}
+    volume: 0.6
+    pitch: 1
+    loop: 1
+    Source: {fileID: 0}
+  - Name: Button
+    Type: 4
+    clip: {fileID: 8300000, guid: a39c9b297bb168e4c8ce859cea4dce8d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    Source: {fileID: 0}
+  - Name: Chop
+    Type: 5
+    clip: {fileID: 8300000, guid: 73ab1dd86b1dd3d4892810e14273ff3e, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    Source: {fileID: 0}
+  - Name: Cook
+    Type: 6
+    clip: {fileID: 8300000, guid: 791685be4bfbe0343a7ceb2bffb7e3a3, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    Source: {fileID: 0}
+  - Name: Order
+    Type: 7
+    clip: {fileID: 8300000, guid: f2054bb3ef55614429a53ccbf5743e87, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    Source: {fileID: 0}
+  - Name: Wash
+    Type: 8
+    clip: {fileID: 8300000, guid: 14fe9c21c9ca7de42ac6c12ba3091f2b, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    Source: {fileID: 0}

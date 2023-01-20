@@ -64,22 +64,27 @@ public class Item
         {
             var info = _data.IngredientProcessInfo.FirstOrDefault(s => s.State == ItemState.Sliced);
             if (info == null) return false;
+            AudioManager.instance.Play(SoundType.ChopFX);
             if (CurrentWorldSpaceTimerBehaviour != null) return true;
             Action onDone = () =>
             {
+                AudioManager.instance.Stop(SoundType.ChopFX);
                 ChangeState(info.State);
                 ItemContainer.ChangeMesh(info);
                 Debug.Log($"{Type} sliced");
             };
+            
             CreateTimerUI(onDone);
             return true;
         }
 
         if (CanWash)
         {
+            AudioManager.instance.Play(SoundType.WashFX);
             if (CurrentWorldSpaceTimerBehaviour != null) return true;
             Action onDone = () =>
             {
+                AudioManager.instance.Stop(SoundType.WashFX);
                 Core.InvokeOnWashComplete(ItemType.Plate);
                 //OnWashComplete?.Invoke(ItemType.Plate);
                 Debug.Log($"{Type} washed");
