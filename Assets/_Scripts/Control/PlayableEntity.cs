@@ -137,9 +137,20 @@ public class PlayableEntity : Entity, IPickupHandler
     {
         if (_isInteracting && (input.Horizontal > 0 || input.Vertical > 0))
         {
+            InterruptedSounds();
             _isInteracting = false;
             _worldSpaceTimer.Interrupted(true);
         }
+    }
+
+    private void InterruptedSounds()
+    {
+        var chopFxPlaying = AudioManager.instance.CheckIfPlaying(SoundType.ChopFX);
+        if(chopFxPlaying)
+            AudioManager.instance.Stop(SoundType.ChopFX);
+        var washFxPlaying = AudioManager.instance.CheckIfPlaying(SoundType.WashFX);
+        if(washFxPlaying)
+            AudioManager.instance.Stop(SoundType.WashFX);
     }
 
     public void ActivateInteractState(Item item)

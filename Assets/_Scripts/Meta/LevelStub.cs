@@ -18,7 +18,13 @@ public class LevelStub : MonoBehaviour
             var data = DataManager.GetSpawnData(SpawnType.CharacterManager);
             Instantiate(data.Prefab);
         }
-        
+
+        if (AudioManager.instance == null)
+        {
+            var data = DataManager.GetSpawnData(SpawnType.AudioManager);
+            Instantiate(data.Prefab);
+        }
+
         if (_isDebugging)
         {
             LevelManager.LevelToLoad(_levelToDebug);

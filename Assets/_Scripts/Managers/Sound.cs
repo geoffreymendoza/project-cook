@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sound
 {
     public string Name;
+    public SoundType Type;
 
     public AudioClip clip;
 
@@ -17,4 +18,17 @@ public class Sound
 
     [HideInInspector]
     public AudioSource Source;
+}
+
+public enum SoundType
+{
+    None,
+    MainMenuBGM,
+    InGameBGM,
+    ResultBGM,
+    ButtonFX,
+    ChopFX,
+    CookFX,
+    OrderCompleteFX,
+    WashFX
 }

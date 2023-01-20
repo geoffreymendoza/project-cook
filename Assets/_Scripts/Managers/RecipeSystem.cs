@@ -149,7 +149,12 @@ public static class RecipeSystem
             }
             else
             {
-                Action onDone = ingredient.UpStateByOne;
+                AudioManager.instance.Play(SoundType.CookFX);
+                Action onDone = () =>
+                {
+                    ingredient.UpStateByOne();
+                    AudioManager.instance.Stop(SoundType.CookFX);
+                };
                 container.CreateTimerUI(ingredient.InteractDuration,onDone);
             }
         }

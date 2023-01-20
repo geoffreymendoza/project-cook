@@ -46,4 +46,6 @@ public enum SpawnType
     PlayerEntity,
     CharacterManager,
     PlayerInputManager,
+    AudioManager,
+    
 }

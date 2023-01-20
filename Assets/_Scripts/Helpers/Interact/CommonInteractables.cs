@@ -231,6 +231,7 @@ public class CounterTable : Interactable
         if (currentState != ItemState.Prepared)
             return false;
         base.PickupItem(itemObject);
+        AudioManager.instance.Play(SoundType.OrderCompleteFX);
         OrderSystem.ServeOrder(dish.Type);
         Action onDone = () =>
         {

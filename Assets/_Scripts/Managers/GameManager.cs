@@ -15,23 +15,27 @@ public static class GameManager
 
     public static void InitializeScene(SceneID scene)
     {
+        AudioManager.instance.StopAll();
         var mainCanvas = UIManager.GetMainCanvas();
-
         switch (scene)
         {
             case SceneID.MainMenu:
+                AudioManager.instance.Play(SoundType.MainMenuBGM);
                 break;
             case SceneID.Game:
                 SetupGameScene();
+                AudioManager.instance.Play(SoundType.InGameBGM);
                 break;
             case SceneID.Results:
                 var resultsUI = UIManager.GetUIObject<ResultsUI>(UIType.Results);
                 resultsUI.transform.SetParent(mainCanvas.transform,false);
+                AudioManager.instance.Play(SoundType.ResultBGM);
                 break;
             case SceneID.LevelSelection:
                 mainCanvas = UIManager.GetMainCanvas();
                 var levelSelectionUI = UIManager.GetUIObject<LevelSelectionUI>(UIType.LevelSelection);
                 levelSelectionUI.transform.SetParent(mainCanvas.transform,false);
+                AudioManager.instance.Play(SoundType.MainMenuBGM);
                 break;
         }
     }
