@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Level02_Soup
   m_EditorClassIdentifier: 
   Type: 2
-  LevelPrefab: {fileID: 1749569576382099559, guid: db0de81e2e4feab4090a1ea93cfbe843, type: 3}
+  LevelPrefab: {fileID: 1697480390136464183, guid: c01b76d0fa2d4fa40bdde02b08b41997, type: 3}
   LevelDuration: 180
   Orders:
   - RecipeType: 401
