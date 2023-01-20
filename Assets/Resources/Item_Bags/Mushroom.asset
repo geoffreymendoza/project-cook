@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d075badf1b8f2b4b854dc01c4e23ac2, type: 3}
+  m_Name: Mushroom
+  m_EditorClassIdentifier: 
+  Type: 2
+  State: 1
+  CanSlice: 1
+  CanCook: 1
+  CanWash: 0
+  InteractDuration: 3
+  Prefab: {fileID: 7827253254451878523, guid: 32100b2397be6df439c796c75ba266e3, type: 3}
+  Model: {fileID: 219002004576582575, guid: 6dbf24ed860b2df4194e5c4cb52130e6, type: 3}
+  IngredientProcessInfo:
+  - State: 2
+    Model: {fileID: 5069718111841866922, guid: fe6156fa5872f3d4c87eb240430c74ec, type: 3}
+  - State: 3
+    Model: {fileID: 0}
