@@ -23,7 +23,7 @@ public static class Data
     
     //SCENE NAMES
     public const string MAIN_MENU_SCENE = "MainMenu";
-    public const string LEVEL_SELECTION_SCENE = "level_selection";
+    public const string LOBBY_SCENE = "lobby";
     public const string GAME_SCENE = "game";
     public const string RESULTS_SCENE = "results";
 

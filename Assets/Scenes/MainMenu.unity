@@ -2155,7 +2155,7 @@ MonoBehaviour:
   UI: {fileID: 448769730}
   MainUI: {fileID: 1016262522}
   LevelUI: {fileID: 1300443868}
-  MainMenuDefaultButton: {fileID: 1795393918}
+  MainMenuDefaultButton: {fileID: 1225707090}
   CustomizeBackButton: {fileID: 1930360278}
   LevelBackButton: {fileID: 636867795}
   _startButton: {fileID: 0}
@@ -3721,6 +3721,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225707090}
   m_CullTransparentMesh: 1
+--- !u!1001 &1259372392
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 107014, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_Name
+      value: Character_Hotdog_Model_Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000009536743
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.614
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.26113978
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.965301
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -149.725
+      objectReference: {fileID: 0}
+    - target: {fileID: 478850, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a866f1bca9b7cc147ad24a179588801c, type: 3}
 --- !u!1 &1269162784
 GameObject:
   m_ObjectHideFlags: 0
@@ -7981,7 +8038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &2714783309542301158
 GameObject:
   m_ObjectHideFlags: 0

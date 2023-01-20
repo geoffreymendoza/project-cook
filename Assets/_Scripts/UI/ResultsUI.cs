@@ -17,7 +17,7 @@ public class ResultsUI : MonoBehaviour
     private void OnApplicationQuit()
     {
         _restartButton.onClick.RemoveListener(RestartScene);
-        _levelSelectionButton.onClick.RemoveListener(() => GoToScene(Data.LEVEL_SELECTION_SCENE));
+        _levelSelectionButton.onClick.RemoveListener(() => GoToScene(Data.LOBBY_SCENE));
         _mainMenuButton.onClick.RemoveListener(() => GoToScene(Data.MAIN_MENU_SCENE));
     }
 
@@ -29,7 +29,7 @@ public class ResultsUI : MonoBehaviour
         var scoreString = $"Score: {ScoreSystem.GetCurrentScore().ToString()}";
         _scoreTextMesh.text = scoreString;
         _restartButton.onClick.AddListener(RestartScene);
-        _levelSelectionButton.onClick.AddListener(() => GoToScene(Data.LEVEL_SELECTION_SCENE));
+        _levelSelectionButton.onClick.AddListener(() => GoToScene(Data.LOBBY_SCENE));
         _mainMenuButton.onClick.AddListener(() => GoToScene(Data.MAIN_MENU_SCENE));
     }
 

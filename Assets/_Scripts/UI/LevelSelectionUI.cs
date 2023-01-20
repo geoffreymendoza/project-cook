@@ -65,17 +65,15 @@ public class LevelSelectionUI : MonoBehaviour
     private void SelectedLevel(LevelType level)
     {
         LevelManager.LevelToLoad(level);
-        if (CharacterManager.Instance.CurrentPlayersCount <= 0)
-        {
-            var mainCanvas = UIManager.GetMainCanvas();
-            var lobbyUI = UIManager.GetUIObject<LobbyUI>(UIType.Lobby);
-            lobbyUI.transform.SetParent(mainCanvas.transform,false);
-            lobbyUI.gameObject.SetActive(true);
-            this.gameObject.SetActive(false);
-        }
-        else
-        {
-            SceneManager.LoadScene(Data.GAME_SCENE);
-        }
+        SceneManager.LoadScene(Data.LOBBY_SCENE);
+
+        
+        // if (CharacterManager.Instance.CurrentPlayersCount <= 0)
+        // {
+        // }
+        // else
+        // {
+        //     SceneManager.LoadScene(Data.GAME_SCENE);
+        // }
     }
 }

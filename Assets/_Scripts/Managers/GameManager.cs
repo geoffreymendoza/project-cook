@@ -31,10 +31,13 @@ public static class GameManager
                 resultsUI.transform.SetParent(mainCanvas.transform,false);
                 AudioManager.instance.Play(SoundType.ResultBGM);
                 break;
-            case SceneID.LevelSelection:
-                mainCanvas = UIManager.GetMainCanvas();
-                var levelSelectionUI = UIManager.GetUIObject<LevelSelectionUI>(UIType.LevelSelection);
-                levelSelectionUI.transform.SetParent(mainCanvas.transform,false);
+            case SceneID.Lobby:
+                var lobbyUI = UIManager.GetUIObject<LobbyUI>(UIType.Lobby);
+                lobbyUI.transform.SetParent(mainCanvas.transform,false);
+                lobbyUI.gameObject.SetActive(true);
+                // mainCanvas = UIManager.GetMainCanvas();
+                // var levelSelectionUI = UIManager.GetUIObject<LevelSelectionUI>(UIType.LevelSelection);
+                // levelSelectionUI.transform.SetParent(mainCanvas.transform,false);
                 AudioManager.instance.Play(SoundType.MainMenuBGM);
                 break;
         }
@@ -120,6 +123,6 @@ public enum SceneID
     MainMenu,
     Game,
     Results,
-    LevelSelection
+    Lobby
     
 }

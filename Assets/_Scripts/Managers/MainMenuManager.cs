@@ -141,12 +141,12 @@ public class MainMenuManager : MonoBehaviour
 
     private void GoToLevelSelection()
     {
-        SceneManager.LoadScene(Data.LEVEL_SELECTION_SCENE);
+        SceneManager.LoadScene(Data.LOBBY_SCENE);
     }
 
     private void OnDestroy()
     {
-        _startButton.onClick.RemoveAllListeners();
+        // _startButton.onClick.RemoveAllListeners();
     }
 }
 
