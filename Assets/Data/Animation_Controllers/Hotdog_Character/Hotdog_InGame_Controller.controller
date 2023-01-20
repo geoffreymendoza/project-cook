@@ -59,7 +59,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hotdog_Animation_Controller
+  m_Name: Hotdog_InGame_Controller
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: nav_speed
