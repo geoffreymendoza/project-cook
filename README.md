@@ -8,7 +8,9 @@ Team Members
 - Geoffrey Luis Mendoza
 - Joshua Franz Sabaot
 
-Cooperation cooking game! Play with your friends in running a restaurant! Chop, cook, boil, and create dishes before the time runs out!
+Cooperation cooking game! Play with your friends in running a restaurant! Chop, cook, boil, and create dishes before the time runs out
+
+![](https://github.com/geoffreymendoza/project-cook/Documentations/demo.gif)
 
 # List of Systems
 ## Save System
