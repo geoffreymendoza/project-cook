@@ -15,8 +15,9 @@ public class CharacterCutomizeUI : MonoBehaviour
     [SerializeField] private Button _rightButton;
     [SerializeField] private Button _enterButton;
     [SerializeField] private GameObject _controlsTutorial;
-    
-    
+    [SerializeField] private Image _fillImage;
+    [SerializeField] private float _fillSpeed;
+
     private PlayableEntity _player;
 
     private void Awake()
@@ -63,12 +64,26 @@ public class CharacterCutomizeUI : MonoBehaviour
     {
         if (_playerIndex != 0) return;
         _controlsTutorial.SetActive(true);
+        // LoadingBar();
+        _loading = true;
         Invoke(nameof(ProceedToScene), 5f);
     }
-
+    
     private void ProceedToScene()
     {
         var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
         fadeTransition.ProceedToScene(Data.GAME_SCENE);
+    }
+
+    private bool _loading = false;
+    private void LoadingBar()
+    {
+        _loading = true;
+    }
+
+    private void Update()
+    {
+        if (!_loading) return;
+        _fillImage.fillAmount += _fillSpeed * Time.deltaTime;
     }
 }

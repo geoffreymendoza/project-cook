@@ -31,7 +31,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void ExitButton()
     {
-
+        Application.Quit();
     }
     public void StartButton() 
     {

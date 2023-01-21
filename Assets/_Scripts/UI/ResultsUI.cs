@@ -36,7 +36,7 @@ public class ResultsUI : MonoBehaviour
     {
         FadeTransitionUI.OnFinishedFadeIn -= OnFinishedFadeIn;
         _slider.value = 0;
-        _slider.maxValue = 100;
+        _slider.maxValue = 300;
         _isAnimating = true;
     }
 
