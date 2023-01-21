@@ -31,7 +31,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void ExitButton()
     {
-
+        Application.Quit();
     }
     public void StartButton() 
     {
@@ -127,26 +127,6 @@ public class MainMenuManager : MonoBehaviour
                 }
             }
         }
-    }
-
-    //TODO attach button once can touch the main menu scene -dyep
-    [SerializeField]
-    private Button _startButton;
-    private void Start()
-    {
-        
-        //_startButton = GameObject.Find("Start Button").GetComponent<Button>();
-       // _startButton.onClick.AddListener(GoToLevelSelection);
-    }
-
-    private void GoToLevelSelection()
-    {
-        SceneManager.LoadScene(Data.LOBBY_SCENE);
-    }
-
-    private void OnDestroy()
-    {
-        // _startButton.onClick.RemoveAllListeners();
     }
 }
 

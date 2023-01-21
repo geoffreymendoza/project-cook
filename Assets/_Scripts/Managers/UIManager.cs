@@ -57,5 +57,6 @@ public enum UIType
     Results,
     LevelSelection,
     Lobby,
-    Popup
+    Popup,
+    FadeTransition
 }

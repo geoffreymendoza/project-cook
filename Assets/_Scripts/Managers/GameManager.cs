@@ -101,7 +101,9 @@ public static class GameManager
 
     public static void ShowResults()
     {
-        SceneManager.LoadScene(Data.RESULTS_SCENE);
+        var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
+        fadeTransition.ProceedToScene(Data.RESULTS_SCENE);
+        // SceneManager.LoadScene(Data.RESULTS_SCENE);
         OnLevelCompleted?.Invoke();
     }
 

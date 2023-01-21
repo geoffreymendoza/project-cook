@@ -37,6 +37,8 @@ public static class InteractSystem
         {
             var items = GetItems(character, interactable);
             if(items.Container == null) return;
+            if (items.Container.Type is ItemType.Plate && items.ItemToCombine.Type is ItemType.Plate) return;            
+            if (items.Container.Type is ItemType.DirtyPlate && items.ItemToCombine.Type is ItemType.DirtyPlate) return;
             if (items.Container.Type is ItemType.DirtyPlate && items.ItemToCombine.Type is ItemType.DirtyPlate)
             {
                 PickupItemByInteractable(character, interactable);

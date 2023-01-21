@@ -22,7 +22,10 @@ public class GameTimeBehaviour : MonoBehaviour
 
     private void OnUpdateTimeUI(float duration)
     {
-        var timeText = $"Time: {duration:F0}";
+        int minutes = Mathf.FloorToInt(duration / 60F);
+        int seconds = Mathf.FloorToInt(duration - minutes * 60);
+        string time = string.Format("{0:0}:{1:00}", minutes, seconds);
+        var timeText = $"Time: {time}";
         _timeUIMesh.text = timeText;
     }
     

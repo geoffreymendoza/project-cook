@@ -48,6 +48,8 @@ public class LobbyUI : MonoBehaviour
             popup.ShowMessage("Must Press Join...");
             return;
         }
-        SceneManager.LoadScene(Data.GAME_SCENE);
+        var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
+        fadeTransition.ProceedToScene(Data.GAME_SCENE);
+        //SceneManager.LoadScene(Data.GAME_SCENE);
     }
 }
