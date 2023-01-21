@@ -65,15 +65,8 @@ public class LevelSelectionUI : MonoBehaviour
     private void SelectedLevel(LevelType level)
     {
         LevelManager.LevelToLoad(level);
-        SceneManager.LoadScene(Data.LOBBY_SCENE);
-
-        
-        // if (CharacterManager.Instance.CurrentPlayersCount <= 0)
-        // {
-        // }
-        // else
-        // {
-        //     SceneManager.LoadScene(Data.GAME_SCENE);
-        // }
+        var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
+        fadeTransition.ExitScene(Data.LOBBY_SCENE);
+        // SceneManager.LoadScene(Data.LOBBY_SCENE);
     }
 }

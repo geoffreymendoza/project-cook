@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13497fa873beb564fbabc872f3883437, type: 3}
-  m_Name: Level01_Sashimi
+  m_Script: {fileID: 11500000, guid: 9abb56e349869214b8a86f4eb4df2dc2, type: 3}
+  m_Name: Fade_Transition
   m_EditorClassIdentifier: 
-  Type: 1
-  LevelPrefab: {fileID: 1697480390136464183, guid: c6cb041c23f13d4489fbd1f87a8f22ef, type: 3}
-  LevelDuration: 10
-  Orders:
-  - RecipeType: 405
-  - RecipeType: 404
+  Type: 15
+  Prefab: {fileID: 3185897938975588608, guid: 5528d31538ad23c44a57b800998c97dd, type: 3}

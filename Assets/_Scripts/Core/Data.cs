@@ -7,6 +7,8 @@ public static class Data
     //ANIMATIONS
     public const string ANIM_NAVIGATION_SPEED = "nav_speed";
     public const string ANIM_POSE = "pose";
+    public const string ANIM_FADE_IN = "fade_in";
+    public const string ANIM_FADE_OUT = "fade_out";
     
     //INPUT CONTEXT
     public const string INPUT_MOVE = "Move";

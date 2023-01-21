@@ -13,6 +13,9 @@ public class LevelStub : MonoBehaviour
 
     private void Start()
     {
+        var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
+        fadeTransition.EnterScene();
+        
         if (CharacterManager.Instance == null)
         {
             var data = DataManager.GetSpawnData(SpawnType.CharacterManager);

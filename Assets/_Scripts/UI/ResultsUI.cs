@@ -11,13 +11,11 @@ public class ResultsUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _levelTextMesh;
     [SerializeField] private TextMeshProUGUI _scoreTextMesh;
     [SerializeField] private Button _restartButton;
-    [SerializeField] private Button _levelSelectionButton;
     [SerializeField] private Button _mainMenuButton;
 
-    private void OnApplicationQuit()
+    private void OnDestroy()
     {
-        _restartButton.onClick.RemoveListener(RestartScene);
-        _levelSelectionButton.onClick.RemoveListener(() => GoToScene(Data.LOBBY_SCENE));
+        _restartButton.onClick.RemoveListener(() => GoToScene(Data.LOBBY_SCENE));
         _mainMenuButton.onClick.RemoveListener(() => GoToScene(Data.MAIN_MENU_SCENE));
     }
 
@@ -28,22 +26,23 @@ public class ResultsUI : MonoBehaviour
         _levelTextMesh.text = levelString;
         var scoreString = $"Score: {ScoreSystem.GetCurrentScore().ToString()}";
         _scoreTextMesh.text = scoreString;
-        _restartButton.onClick.AddListener(RestartScene);
-        _levelSelectionButton.onClick.AddListener(() => GoToScene(Data.LOBBY_SCENE));
+        _restartButton.onClick.AddListener(() => GoToScene(Data.LOBBY_SCENE));
         _mainMenuButton.onClick.AddListener(() => GoToScene(Data.MAIN_MENU_SCENE));
     }
 
     private void RestartScene()
     {
-        var mainCanvas = UIManager.GetMainCanvas();
-        var lobbyUI = UIManager.GetUIObject<LobbyUI>(UIType.Lobby);
-        lobbyUI.transform.SetParent(mainCanvas.transform,false);
-        lobbyUI.gameObject.SetActive(true);
-        this.gameObject.SetActive(false);
+        // var mainCanvas = UIManager.GetMainCanvas();
+        // var lobbyUI = UIManager.GetUIObject<LobbyUI>(UIType.Lobby);
+        // lobbyUI.transform.SetParent(mainCanvas.transform,false);
+        // lobbyUI.gameObject.SetActive(true);
+        // this.gameObject.SetActive(false);
     }
 
     private void GoToScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
+        fadeTransition.ExitScene(sceneName);
+        // SceneManager.LoadScene(sceneName);
     }
 }
