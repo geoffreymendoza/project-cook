@@ -78,11 +78,10 @@ Cooperation cooking game! Play with your friends in running a restaurant! Chop, 
 - Windows 7, Windows 10, or Windows 11
 - Direct X version 9, 10, or 11
 
-## Credits
-# Asset
-Characters
+## Assets used
+#### Characters
 - Synty Polygon Series (https://syntystore.com/collections/frontpage)
-Sounds Effects
+#### Sounds Effects
 - https://pixabay.com/sound-effects/
-Music
+#### Music
 - https://www.chosic.com/
