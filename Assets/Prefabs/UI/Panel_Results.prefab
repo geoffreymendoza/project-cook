@@ -231,6 +231,8 @@ MonoBehaviour:
   _scoreTextMesh: {fileID: 1274704041235206189}
   _restartButton: {fileID: 1274704041570802608}
   _mainMenuButton: {fileID: 1274704041378420481}
+  _slider: {fileID: 3238014356811530009}
+  _animateSpeed: 30
 --- !u!1 &1274704039855681682
 GameObject:
   m_ObjectHideFlags: 0

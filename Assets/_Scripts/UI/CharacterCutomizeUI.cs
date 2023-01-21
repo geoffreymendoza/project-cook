@@ -61,7 +61,6 @@ public class CharacterCutomizeUI : MonoBehaviour
 
     private void GoToGame()
     {
-        //TODO transition effect
         if (_playerIndex != 0) return;
         _controlsTutorial.SetActive(true);
         Invoke(nameof(ProceedToScene), 5f);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class FadeTransitionUI : MonoBehaviour
 {
+    public static event Action OnFinishedFadeIn;
+    
     [SerializeField] private Animator _animator;
     private string _sceneToLoad;
     
@@ -12,6 +15,13 @@ public class FadeTransitionUI : MonoBehaviour
     void Start()
     {
         // _animator.Play("fade in");
+        
+        Invoke(nameof(InvokeOnFinishedFadeIn), 2f);
+    }
+
+    private void InvokeOnFinishedFadeIn()
+    {
+        OnFinishedFadeIn?.Invoke();
     }
 
     public void EnterScene()
