@@ -10,7 +10,7 @@ Team Members
 
 Cooperation cooking game! Play with your friends in running a restaurant! Chop, cook, boil, and create dishes before the time runs out
 
-![](https://github.com/geoffreymendoza/project-cook/demo.gif)
+  ![](https://github.com/geoffreymendoza/project-cook/blob/master/Documentations/demo.gif)
 
 # List of Systems
 ## Save System
@@ -68,6 +68,7 @@ Cooperation cooking game! Play with your friends in running a restaurant! Chop, 
 - 4 GB RAM
 - Keyboard
 - Mouse
+- Gamepad Controller
 - Monitor
 - Speakers
 - Hard drive
