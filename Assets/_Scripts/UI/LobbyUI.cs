@@ -49,7 +49,7 @@ public class LobbyUI : MonoBehaviour
             return;
         }
         var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
-        fadeTransition.ExitScene(Data.GAME_SCENE);
+        fadeTransition.ProceedToScene(Data.GAME_SCENE);
         //SceneManager.LoadScene(Data.GAME_SCENE);
     }
 }

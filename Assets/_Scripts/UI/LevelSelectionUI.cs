@@ -66,7 +66,7 @@ public class LevelSelectionUI : MonoBehaviour
     {
         LevelManager.LevelToLoad(level);
         var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
-        fadeTransition.ExitScene(Data.LOBBY_SCENE);
+        fadeTransition.ProceedToScene(Data.LOBBY_SCENE);
         // SceneManager.LoadScene(Data.LOBBY_SCENE);
     }
 }

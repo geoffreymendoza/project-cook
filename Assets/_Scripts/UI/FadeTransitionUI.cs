@@ -19,7 +19,7 @@ public class FadeTransitionUI : MonoBehaviour
         _animator.Play(Data.ANIM_FADE_IN);
     }
 
-    public void ExitScene(string sceneName)
+    public void ProceedToScene(string sceneName)
     {
         _animator.Play(Data.ANIM_FADE_OUT);
         _sceneToLoad = sceneName;

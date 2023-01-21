@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class CharacterCutomizeUI : MonoBehaviour
@@ -12,7 +13,10 @@ public class CharacterCutomizeUI : MonoBehaviour
     [SerializeField] private Button _leftButton;
     [SerializeField] private Button _selectButton;
     [SerializeField] private Button _rightButton;
-    [SerializeField] private Button _startButton;
+    [SerializeField] private Button _enterButton;
+    [SerializeField] private GameObject _controlsTutorial;
+    
+    
     private PlayableEntity _player;
 
     private void Awake()
@@ -21,7 +25,7 @@ public class CharacterCutomizeUI : MonoBehaviour
         _leftButton.onClick.AddListener(() => NavigateModel(-1));
         _rightButton.onClick.AddListener(() => NavigateModel(1));
         _selectButton.onClick.AddListener(OnSelect);
-        _startButton.onClick.AddListener(GoToGame);
+        _enterButton.onClick.AddListener(GoToGame);
     }
 
     private void OnDestroy()
@@ -30,7 +34,7 @@ public class CharacterCutomizeUI : MonoBehaviour
         _leftButton.onClick.RemoveListener(() => NavigateModel(-1));
         _rightButton.onClick.RemoveListener(() => NavigateModel(1));
         _selectButton.onClick.RemoveListener(OnSelect);
-        _startButton.onClick.RemoveListener(GoToGame);
+        _enterButton.onClick.RemoveListener(GoToGame);
     }
 
     private void OnCharacterJoined(int playerCount)
@@ -51,13 +55,21 @@ public class CharacterCutomizeUI : MonoBehaviour
         _leftButton.interactable = false;
         _rightButton.interactable = false;
         _selectButton.interactable = false;
-        _startButton.interactable = true;
-        _startButton.Select();
+        _enterButton.interactable = true;
+        _enterButton.Select();
     }
 
     private void GoToGame()
     {
         //TODO transition effect
-        SceneManager.LoadScene(Data.GAME_SCENE);
+        if (_playerIndex != 0) return;
+        _controlsTutorial.SetActive(true);
+        Invoke(nameof(ProceedToScene), 5f);
+    }
+
+    private void ProceedToScene()
+    {
+        var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
+        fadeTransition.ProceedToScene(Data.GAME_SCENE);
     }
 }

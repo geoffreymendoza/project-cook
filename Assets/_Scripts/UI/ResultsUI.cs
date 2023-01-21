@@ -32,17 +32,13 @@ public class ResultsUI : MonoBehaviour
 
     private void RestartScene()
     {
-        // var mainCanvas = UIManager.GetMainCanvas();
-        // var lobbyUI = UIManager.GetUIObject<LobbyUI>(UIType.Lobby);
-        // lobbyUI.transform.SetParent(mainCanvas.transform,false);
-        // lobbyUI.gameObject.SetActive(true);
-        // this.gameObject.SetActive(false);
+        
     }
 
     private void GoToScene(string sceneName)
     {
         var fadeTransition = UIManager.GetUIObject<FadeTransitionUI>(UIType.FadeTransition);
-        fadeTransition.ExitScene(sceneName);
+        fadeTransition.ProceedToScene(sceneName);
         // SceneManager.LoadScene(sceneName);
     }
 }

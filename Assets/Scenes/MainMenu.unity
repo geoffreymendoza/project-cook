@@ -2057,7 +2057,6 @@ MonoBehaviour:
   MainMenuDefaultButton: {fileID: 1225707090}
   CustomizeBackButton: {fileID: 1930360278}
   LevelBackButton: {fileID: 636867795}
-  _startButton: {fileID: 0}
 --- !u!1 &763153818
 GameObject:
   m_ObjectHideFlags: 0
