@@ -1,4 +1,4 @@
-# Overcooked Clone
+# Overcooked Reverse Engineered
 
 ### Final Product for subject Game Programming 2
 
@@ -8,7 +8,7 @@ Team Members
 - Geoffrey Luis Mendoza
 - Joshua Franz Sabaot
 
-//TODO short desc of game, gameplay mechanic and some systems
+Cooperation cooking game! Play with your friends in running a restaurant! Chop, cook, boil, and create dishes before the time runs out!
 
 # List of Systems
 ## Save System
@@ -33,7 +33,7 @@ Team Members
 - Can handle up to 2 player
 - Joystick compatibility
 ## Recipe System
-- Able to mix and match different ingredients to create a dish item
+- Able to mix and match different ingredients to create a dish item.3
 - Handle ingredients current state to new state
 - Character able to combine ingredients:
    - On a plate
@@ -44,7 +44,6 @@ Team Members
 - Cooking utilities to perform auto-cooking ingredients (eg stove)
 - Serving utilities to place the food (eg serving table, dining table) 
 - Kitchen utilities to prepare ingredients (eg chopping board)
-- Safety utilities (eg fire extinguisher)
 ## Ordering System
 - A list of an order with an item combination required for order
 - Orders are shown in random intervals
